@@ -1,0 +1,12 @@
+{
+  "name": "marine-vessel-app",
+  "version": "1.0.0",
+  "description": "A web application for visualising marine vessels' locations.",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}
