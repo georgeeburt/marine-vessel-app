@@ -4,9 +4,16 @@
   "description": "A web application for visualising marine vessels' locations.",
   "scripts": {
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint --ext .ts,.tsx,.vue .",
+    "lint:fix": "eslint --ext .ts,.tsx,.vue . --fix"
   },
   "devDependencies": {
-    "prettier": "^3.5.3"
+    "@eslint/js": "^9.24.0",
+    "eslint": "^9.24.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "typescript-eslint": "^8.29.1"
   }
 }
