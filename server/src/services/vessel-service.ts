@@ -44,7 +44,7 @@ export async function updateVessel(
 ) {
   try {
     const existingVessel = await prisma.vessel.findUnique({
-      where: { name },
+      where: { id },
     });
 
     if (existingVessel && existingVessel.id !== id) {
@@ -67,18 +67,10 @@ export async function updateVessel(
   }
 }
 
-export const deleteVessel = async (name: string) => {
+export const deleteVessel = async (id: number) => {
   try {
-    const existingVessel = await prisma.vessel.findUnique({
-      where: { name },
-    });
-
-    if (!existingVessel) {
-      throw new Error('Vessel not found');
-    }
-
     return await prisma.vessel.delete({
-      where: { name },
+      where: { id },
     });
   } catch (error: any) {
     console.error('Error deleting vessel:', error);

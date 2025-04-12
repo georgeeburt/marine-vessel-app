@@ -9,7 +9,12 @@ dotenv.config();
 
 export const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['POST', 'PUT', 'DELETE'],
+  }
+});
 
 app.use(morgan('dev'));
 app.use('/api/vessels', vesselRoutes);
@@ -17,6 +22,6 @@ app.use('/api/vessels', vesselRoutes);
 socketConfig(io);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
