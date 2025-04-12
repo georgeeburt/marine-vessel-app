@@ -4,14 +4,14 @@ import http from 'node:http';
 import { Server } from 'socket.io';
 import vesselRoutes from './routes/vessel-routes';
 import socketConfig from './config/socket-config';
+import morgan from 'morgan';
 dotenv.config();
 
 export const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(express.json());
-
+app.use(morgan('dev'));
 app.use('/api/vessels', vesselRoutes);
 
 socketConfig(io);

@@ -1,4 +1,4 @@
-import { PrismaClient } from '../prisma/generated/index';
+import { PrismaClient } from '../../prisma/generated/index';
 
 const prisma = new PrismaClient();
 
@@ -19,7 +19,7 @@ export const createVessel = async (name: string, latitude: number, longitude: nu
     });
 
     if (existingVessel && existingVessel.name === name) {
-      throw new Error('A vessel with this name already exists.');
+      throw new Error('A vessel with this name already exists');
     }
 
     const vessel = await prisma.vessel.create({
@@ -48,7 +48,7 @@ export async function updateVessel(
     });
 
     if (existingVessel && existingVessel.id !== id) {
-      throw new Error('A vessel with this name already exists.');
+      throw new Error('A vessel with this name already exists');
     }
 
     const updatedVessel = await prisma.vessel.update({
@@ -69,11 +69,19 @@ export async function updateVessel(
 
 export const deleteVessel = async (name: string) => {
   try {
-    await prisma.vessel.delete({
+    const existingVessel = await prisma.vessel.findUnique({
       where: { name },
     });
-  } catch (error) {
+
+    if (!existingVessel) {
+      throw new Error('Vessel not found');
+    }
+
+    return await prisma.vessel.delete({
+      where: { name },
+    });
+  } catch (error: any) {
     console.error('Error deleting vessel:', error);
-    throw new Error('Error deleting vessel');
+    throw new Error(error.message || 'Error deleting vessel');
   }
 };
