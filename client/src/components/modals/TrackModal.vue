@@ -89,7 +89,6 @@ const handleModelClose = () => {
 };
 </script>
 
-
 <style scoped>
 .action-buttons {
   display: flex;
