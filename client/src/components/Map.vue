@@ -1,9 +1,3 @@
-<template>
-  <div class="map-container">
-    <div id="map" ref="mapRef"></div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
@@ -16,7 +10,7 @@ onMounted(async () => {
 
   const loader = new Loader({
     apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    version: 'weekly',
+    version: 'quarterly',
   });
 
   const { Map } = await loader.importLibrary('maps');
@@ -27,6 +21,12 @@ onMounted(async () => {
   });
 });
 </script>
+
+<template>
+  <div class="map-container">
+    <div id="map" ref="mapRef"></div>
+  </div>
+</template>
 
 <style scoped>
 .map-container {
