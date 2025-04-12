@@ -1,3 +1,9 @@
+<template>
+  <div class="map-container">
+    <div id="map" ref="mapRef"></div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
@@ -21,12 +27,6 @@ onMounted(async () => {
   });
 });
 </script>
-
-<template>
-  <div class="map-container">
-    <div id="map" ref="mapRef"></div>
-  </div>
-</template>
 
 <style scoped>
 .map-container {

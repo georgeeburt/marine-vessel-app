@@ -1,15 +1,10 @@
-<script setup lang="ts">
-import { NButton, NIcon } from 'naive-ui';
-import AddSharp from '@vicons/ionicons5/AddSharp';
-
-defineEmits(['open-modal']);
-</script>
-
 <template>
   <section id="sidebar">
     <h1>Marine Vessels</h1>
     <div class="action-container">
-      <input type="text" placeholder="Search for Vessels..." class="search" />
+      <n-input class="search" type="text" placeholder="Search for Vessel"
+        ><template #suffix><n-icon :component="Search" /></template
+      ></n-input>
       <NButton class="add-button" type="primary" @click="$emit('open-modal')">
         <n-icon color="white" class="icon-spacing">
           <AddSharp />
@@ -19,6 +14,13 @@ defineEmits(['open-modal']);
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+import { NButton, NIcon, NInput } from 'naive-ui';
+import { AddSharp, Search } from '@vicons/ionicons5';
+
+defineEmits(['open-modal']);
+</script>
 
 <style scoped>
 #sidebar {
@@ -42,9 +44,6 @@ defineEmits(['open-modal']);
 
 .search {
   flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
   width: 70%;
 }
 
