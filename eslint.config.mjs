@@ -20,4 +20,7 @@ export default defineConfig([
       'no-undef': 'off',
     },
   },
+  {
+    ignores: ['*/prisma/**', '**/*.generated/*'],
+  },
 ]);
