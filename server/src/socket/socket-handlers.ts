@@ -24,7 +24,12 @@ export default function socketHandlers(socket: Socket, io: Server) {
     try {
       const { id, name, latitude, longitude } = vesselData;
 
-      const updatedVessel = await VesselService.updateVessel(id, name, latitude, longitude);
+      const updatedVessel = await VesselService.updateVessel(
+        id,
+        name,
+        latitude,
+        longitude
+      );
       if (!updatedVessel) {
         socket.emit('error', { message: 'Vessel not found' });
         return;

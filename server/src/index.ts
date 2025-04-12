@@ -13,7 +13,7 @@ const io = new Server(server, {
   cors: {
     origin: '*',
     methods: ['POST', 'PUT', 'DELETE'],
-  }
+  },
 });
 
 app.use(morgan('dev'));

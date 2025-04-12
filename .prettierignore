@@ -1,0 +1,14 @@
+# Prisma
+server/prisma
+
+# Package Manager Files
+pnpm-lock.yaml
+package.json
+
+# Other
+README.md
+tsconfig.json
+eslint.config.mjs
+.prettierrc.yaml
+*.config.*
+.vscode
