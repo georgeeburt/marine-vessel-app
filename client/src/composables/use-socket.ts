@@ -18,7 +18,7 @@ export const useSocket = () => {
     socket.on('vessel:delete', (vesselId) => {
       vesselStore.deleteVessel(vesselId);
     });
-  }
+  };
 
   const emitAddVessel = (vesselData: NewVessel) => {
     socket.emit('vessel:add', vesselData);
@@ -33,12 +33,12 @@ export const useSocket = () => {
   };
   const disconnect = () => {
     socket.disconnect();
-  }
+  };
   return {
     listenToVesselEvents,
     emitAddVessel,
     emitUpdateVessel,
     emitDeleteVessel,
-    disconnect
-  }
-}
+    disconnect,
+  };
+};

@@ -1,4 +1,4 @@
-import { useVesselStore } from "../stores/vessel-store";
+import { useVesselStore } from '../stores/vessel-store';
 
 export const useVesselData = async () => {
   const vesselStore = useVesselStore();
@@ -10,7 +10,7 @@ export const useVesselData = async () => {
 
     vesselStore.vessels = data;
   } catch (error) {
-    console.error("Error fetching vessel data:", error);
-    throw new Error("Failed to fetch vessel data");
+    console.error('Error fetching vessel data:', error);
+    throw new Error('Failed to fetch vessel data');
   }
 };
