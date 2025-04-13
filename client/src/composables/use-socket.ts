@@ -3,7 +3,7 @@ import { useVesselStore } from '../stores/vessel-store';
 import type { Vessel, NewVessel } from '@shared/types/vessel';
 
 export const useSocket = () => {
-  const socket = io(import.meta.env.VITE_SOCKET_URL);
+  const socket = io(import.meta.env.VITE_API_URL);
   const vesselStore = useVesselStore();
 
   const listenToVesselEvents = () => {

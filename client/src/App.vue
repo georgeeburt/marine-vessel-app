@@ -13,14 +13,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { NConfigProvider, NModalProvider, NMessageProvider } from 'naive-ui';
 import TrackForm from './components/modals/TrackModal.vue';
 import Sidebar from './components/layout/Sidebar.vue';
 import Map from './components/layout/Map.vue';
+import { useSocket } from './composables/use-socket';
+import { useVesselData } from './composables/use-vessel-data';
 import type { GlobalThemeOverrides } from 'naive-ui';
 
 const showModal = ref(false);
+onMounted(async () => {
+  await useVesselData();
+  useSocket().listenToVesselEvents();
+});
+
 const themeOverrides: GlobalThemeOverrides = {
   common: {
     primaryColor: '#4D6BFE',
