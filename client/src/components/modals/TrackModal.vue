@@ -36,10 +36,22 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NForm, NFormItem, NButton, NInput, NInputNumber, NModal } from 'naive-ui';
+import { useSocket } from '../../composables/use-socket';
+import {
+  NForm,
+  NFormItem,
+  NButton,
+  NInput,
+  NInputNumber,
+  NModal,
+  useMessage,
+} from 'naive-ui';
 import type { FormInst } from 'naive-ui';
 
 const show = defineModel<boolean>('show');
+const message = useMessage();
+
+const { emitAddVessel } = useSocket();
 
 const formRef = ref<FormInst | null>(null);
 const formValue = ref({
@@ -73,8 +85,11 @@ const handleValidateClick = () => {
     formRef.value
       .validate()
       .then(() => {
-        console.log('Form is valid:', formValue.value);
+        emitAddVessel(formValue.value);
+
+        message.success('Started tracking Vessel');
         show.value = false;
+
         formValue.value = { name: '', latitude: 0, longitude: 0 };
       })
       .catch((errors) => {

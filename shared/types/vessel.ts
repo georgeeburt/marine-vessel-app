@@ -4,3 +4,5 @@ export interface Vessel {
   latitude: number;
   longitude: number;
 }
+
+export interface NewVessel extends Omit<Vessel, 'id'> {};

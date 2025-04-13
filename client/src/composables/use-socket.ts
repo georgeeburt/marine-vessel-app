@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
-import { useVesselStore } from '@/stores/vessel-store';
-import type { Vessel } from '@shared/types/vessel';
+import { useVesselStore } from '../stores/vessel-store';
+import type { Vessel, NewVessel } from '@shared/types/vessel';
 
 export const useSocket = () => {
   const socket = io(import.meta.env.VITE_SOCKET_URL);
@@ -20,7 +20,7 @@ export const useSocket = () => {
     });
   }
 
-  const emitAddVessel = (vesselData: Vessel) => {
+  const emitAddVessel = (vesselData: NewVessel) => {
     socket.emit('vessel:add', vesselData);
   };
 

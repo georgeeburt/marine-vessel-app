@@ -1,18 +1,20 @@
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
-    <n-modal-provider>
-      <div class="app-container">
-        <Sidebar @open-modal="showModal = true" />
-        <Map />
-      </div>
-      <TrackForm v-model:show="showModal" />
-    </n-modal-provider>
+    <n-message-provider>
+      <n-modal-provider>
+        <div class="app-container">
+          <Sidebar @open-modal="showModal = true" />
+          <Map />
+        </div>
+        <TrackForm v-model:show="showModal" />
+      </n-modal-provider>
+    </n-message-provider>
   </n-config-provider>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NConfigProvider, NModalProvider } from 'naive-ui';
+import { NConfigProvider, NModalProvider, NMessageProvider } from 'naive-ui';
 import TrackForm from './components/modals/TrackModal.vue';
 import Sidebar from './components/layout/Sidebar.vue';
 import Map from './components/layout/Map.vue';
