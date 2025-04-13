@@ -8,6 +8,14 @@ export default function socketHandlers(socket: Socket, io: Server) {
       const { name, latitude, longitude } = vesselData;
       const newVessel = await VesselService.createVessel(name, latitude, longitude);
 
+      if (
+        latitude < -90 || latitude > 90 ||
+        longitude < -180 || longitude > 180
+      ) {
+        socket.emit('error', { message: 'Invalid latitude or longitude' });
+        return;
+      }
+
       io.emit('vessel:add', newVessel);
     } catch (error: any) {
       if (error.message === 'A vessel with this name already exists') {
@@ -35,6 +43,14 @@ export default function socketHandlers(socket: Socket, io: Server) {
         return;
       }
 
+      if (
+        latitude < -90 || latitude > 90 ||
+        longitude < -180 || longitude > 180
+      ) {
+        socket.emit('error', { message: 'Invalid latitude or longitude' });
+        return;
+      }
+
       io.emit('vessel:update', updatedVessel);
     } catch (error: any) {
       if (error.message === 'A vessel with this name already exists') {
@@ -47,10 +63,10 @@ export default function socketHandlers(socket: Socket, io: Server) {
     }
   });
 
-  socket.on('vessel:delete', (vesselData: Vessel) => {
+  socket.on('vessel:delete', async (vesselData: Vessel) => {
     try {
       const { id } = vesselData;
-      const deletedVessel = VesselService.deleteVessel(id);
+      const deletedVessel = await VesselService.deleteVessel(id);
 
       if (!deletedVessel) {
         socket.emit('error', { message: 'Vessel not found' });

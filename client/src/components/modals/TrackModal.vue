@@ -9,15 +9,28 @@
     <h2>Track New Vessel</h2>
     <n-form ref="formRef" :model="formValue" :rules="rules">
       <n-form-item label="Vessel Name" path="name">
-        <n-input v-model:value="formValue.name" placeholder="Enter vessel name" />
+        <n-input
+          v-model:value="formValue.name"
+          placeholder="Enter vessel name"
+          clearable
+        />
       </n-form-item>
       <n-form-item label="Latitude" path="latitude">
-        <n-input-number v-model:value="formValue.latitude" placeholder="Enter latitude" />
+        <n-input-number
+          v-model:value="formValue.latitude"
+          :min="-90"
+          :max="90"
+          placeholder="Enter latitude"
+          clearable
+        />
       </n-form-item>
       <n-form-item label="Longitude" path="longitude">
         <n-input-number
           v-model:value="formValue.longitude"
+          :min="-180"
+          :max="180"
           placeholder="Enter longitude"
+          clearable
         />
       </n-form-item>
       <div class="action-buttons">
