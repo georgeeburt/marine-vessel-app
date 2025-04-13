@@ -47,7 +47,7 @@ export default function socketHandlers(socket: Socket, io: Server) {
     }
   });
 
-  socket.on('vessel:remove', (vesselData: Vessel) => {
+  socket.on('vessel:delete', (vesselData: Vessel) => {
     try {
       const { id } = vesselData;
       const deletedVessel = VesselService.deleteVessel(id);
@@ -57,7 +57,7 @@ export default function socketHandlers(socket: Socket, io: Server) {
         return;
       }
 
-      io.emit('vessel:remove', deletedVessel);
+      io.emit('vessel:delete', deletedVessel);
     } catch (error: any) {
       if (error.message === 'Vessel not found') {
         socket.emit('error', { message: 'Vessel not found' });
