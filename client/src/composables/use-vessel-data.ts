@@ -4,7 +4,6 @@ export const useVesselData = async () => {
   const vesselStore = useVesselStore();
 
   try {
-    console.log(import.meta.env.VITE_API_URL);
     const response = await fetch(import.meta.env.VITE_API_URL + '/api/vessels');
     const data = await response.json();
 

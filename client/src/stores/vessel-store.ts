@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { defineStore } from 'pinia';
 import type { Vessel } from '@shared/types/vessel';
 
 export const useVesselStore = defineStore('vessel', () => {
