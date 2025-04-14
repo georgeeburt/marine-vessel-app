@@ -8,21 +8,19 @@ export default function socketHandlers(socket: Socket, io: Server) {
       const { name, latitude, longitude } = vesselData;
       const newVessel = await VesselService.createVessel(name, latitude, longitude);
 
-      if (
-        latitude < -90 || latitude > 90 ||
-        longitude < -180 || longitude > 180
-      ) {
+      if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
         socket.emit('error', { message: 'Invalid latitude or longitude' });
         return;
       }
 
       io.emit('vessel:add', newVessel);
-    } catch (error: any) {
-      if (error.message === 'A vessel with this name already exists') {
-        socket.emit('error', { message: 'A vessel with this name already exists' });
-        return;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === 'A vessel with this name already exists') {
+          socket.emit('error', { message: 'A vessel with this name already exists' });
+          return;
+        }
       }
-
       console.error('Error adding vessel:', error);
       socket.emit('error', { message: 'Failed to add vessel' });
     }
@@ -43,21 +41,19 @@ export default function socketHandlers(socket: Socket, io: Server) {
         return;
       }
 
-      if (
-        latitude < -90 || latitude > 90 ||
-        longitude < -180 || longitude > 180
-      ) {
+      if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
         socket.emit('error', { message: 'Invalid latitude or longitude' });
         return;
       }
 
       io.emit('vessel:update', updatedVessel);
-    } catch (error: any) {
-      if (error.message === 'A vessel with this name already exists') {
-        socket.emit('error', { message: 'A vessel with this name already exists' });
-        return;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === 'A vessel with this name already exists') {
+          socket.emit('error', { message: 'A vessel with this name already exists' });
+          return;
+        }
       }
-
       console.error('Error updating vessel:', error);
       socket.emit('error', { message: 'Failed to update vessel' });
     }
@@ -74,12 +70,13 @@ export default function socketHandlers(socket: Socket, io: Server) {
       }
 
       io.emit('vessel:delete', deletedVessel);
-    } catch (error: any) {
-      if (error.message === 'Vessel not found') {
-        socket.emit('error', { message: 'Vessel not found' });
-        return;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === 'Vessel not found') {
+          socket.emit('error', { message: 'Vessel not found' });
+          return;
+        }
       }
-
       console.error('Error deleting vessel:', error);
       socket.emit('error', { message: 'Failed to delete vessel' });
     }

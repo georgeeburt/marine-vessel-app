@@ -72,8 +72,8 @@ export const deleteVessel = async (id: number) => {
     return await prisma.vessel.delete({
       where: { id },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error deleting vessel:', error);
-    throw new Error(error.message || 'Error deleting vessel');
+    throw new Error('Error deleting vessel');
   }
 };

@@ -1,6 +1,5 @@
 <template>
-  <section id="sidebar">
-    <h1>Marine Vessels</h1>
+  <aside id="sidebar">
     <div class="action-container">
       <n-input class="search" type="text" placeholder="Search for Vessel"
         ><template #suffix><n-icon :component="Search" /></template
@@ -12,12 +11,14 @@
         Add Vessel
       </NButton>
     </div>
-  </section>
+    <VesselList />
+  </aside>
 </template>
 
 <script setup lang="ts">
 import { NButton, NIcon, NInput } from 'naive-ui';
 import { AddSharp, Search } from '@vicons/ionicons5';
+import VesselList from './VesselList.vue';
 
 defineEmits(['open-modal']);
 </script>
@@ -27,6 +28,7 @@ defineEmits(['open-modal']);
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 25px;
   padding: 25px;
   height: 100vh;
   width: 15%;

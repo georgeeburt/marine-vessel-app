@@ -8,7 +8,7 @@
 import { onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { Loader } from '@googlemaps/js-api-loader';
-import { setMap } from '../..//utils/map-instance';
+import { setMap } from './map-instance';
 import { useSocket } from '../../composables/use-socket';
 import { useVesselStore } from '../../stores/vessel-store';
 import { useMarkerStore } from '../../stores/marker-store';
@@ -46,7 +46,7 @@ onMounted(async () => {
     const PIN_STYLES = {
       background: '#4D6BFE',
       borderColor: '8DA0FF',
-      glyphColor: '#8DA0FF'
+      glyphColor: '#8DA0FF',
     };
 
     watch(

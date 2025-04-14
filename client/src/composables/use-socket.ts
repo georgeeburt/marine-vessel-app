@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-import { map } from '..//utils/map-instance';
+import { map } from '../components/map/map-instance';
 import { useVesselStore } from '../stores/vessel-store';
 import { useMarkerStore } from '../stores/marker-store';
 import type { Vessel, NewVessel } from '@shared/types/vessel';
@@ -16,7 +16,7 @@ export const useSocket = () => {
         position: { lat: vessel.latitude, lng: vessel.longitude },
         map: map.value,
         title: vessel.name,
-      })
+      });
       markerStore.addMarker({
         ...vessel,
         newMarker,

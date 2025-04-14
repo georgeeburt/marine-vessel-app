@@ -5,4 +5,4 @@ export interface Vessel {
   longitude: number;
 }
 
-export interface NewVessel extends Omit<Vessel, 'id'> {}
+export type NewVessel = Omit<Vessel, 'id'>;

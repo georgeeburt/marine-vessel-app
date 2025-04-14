@@ -16,8 +16,8 @@
 import { ref } from 'vue';
 import { NConfigProvider, NModalProvider, NMessageProvider } from 'naive-ui';
 import TrackForm from './components/modals/TrackModal.vue';
-import Sidebar from './components/layout/Sidebar.vue';
-import Map from './components/layout/Map.vue';
+import Sidebar from './components/sidebar/Sidebar.vue';
+import Map from './components/map/Map.vue';
 import type { GlobalThemeOverrides } from 'naive-ui';
 
 const showModal = ref(false);
