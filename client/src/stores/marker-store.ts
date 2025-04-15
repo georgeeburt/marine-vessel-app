@@ -16,7 +16,10 @@ export const useMarkerStore = defineStore('marker', () => {
     const index = markers.value.findIndex((marker) => marker.id === updatedMarker.id);
     if (index !== -1) {
       markers.value[index].marker.position = updatedMarker.marker.position;
-      markers.value[index] = updatedMarker;
+
+      markers.value[index].latitude = updatedMarker.latitude;
+      markers.value[index].longitude = updatedMarker.longitude;
+      markers.value[index].name = updatedMarker.name;
     }
   };
 

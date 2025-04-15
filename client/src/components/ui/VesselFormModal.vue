@@ -1,12 +1,13 @@
 <template>
   <n-modal
-    v-model:show="show"
+    :show="show"
     class="modal"
     preset="dialog"
     :show-icon="false"
-    @after-leave="handleModelClose"
+    @update:show="$emit('update:show', $event)"
+    @after-leave="resetForm"
   >
-    <h2>Track New Vessel</h2>
+    <h2>{{ isEditing ? 'Edit Vessel' : 'Track New Vessel' }}</h2>
     <n-form ref="formRef" :model="formValue" :rules="rules">
       <n-form-item label="Vessel Name" path="name">
         <n-input
@@ -35,11 +36,11 @@
       </n-form-item>
       <div class="action-buttons">
         <n-form-item>
-          <n-button @click="handleModelClose">Cancel</n-button>
+          <n-button @click="$emit('update:show', false)">Cancel</n-button>
         </n-form-item>
         <n-form-item>
           <n-button type="primary" @click="handleValidateClick" style="width: 100%">
-            Track Vessel
+            {{ isEditing ? 'Update Vessel' : 'Track Vessel' }}
           </n-button>
         </n-form-item>
       </div>
@@ -48,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useSocket } from '../../composables/use-socket';
 import {
   NForm,
@@ -60,18 +61,40 @@ import {
   useMessage,
 } from 'naive-ui';
 import type { FormInst } from 'naive-ui';
+import type { Vessel } from '@shared/types/vessel';
 
-const show = defineModel<boolean>('show');
+const props = defineProps<{
+  show: boolean;
+  vessel?: Vessel | null;
+}>();
+
+const emit = defineEmits(['update:show']);
 const message = useMessage();
-
-const { emitAddVessel } = useSocket();
+const { emitAddVessel, emitUpdateVessel } = useSocket();
 
 const formRef = ref<FormInst | null>(null);
-const formValue = ref({
+const formValue = ref<{
+  id?: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+}>({
   name: '',
   latitude: 0,
   longitude: 0,
 });
+
+const isEditing = computed(() => !!props.vessel?.id);
+
+watch(
+  () => props.vessel,
+  (newVessel) => {
+    if (newVessel) {
+      formValue.value = { ...newVessel };
+    }
+  },
+  { immediate: true }
+);
 
 const rules = {
   name: {
@@ -98,23 +121,30 @@ const handleValidateClick = () => {
     formRef.value
       .validate()
       .then(() => {
-        emitAddVessel(formValue.value);
-
-        message.success('Started tracking Vessel');
-        show.value = false;
-
-        formValue.value = { name: '', latitude: 0, longitude: 0 };
+        if (isEditing.value) {
+          emitUpdateVessel(formValue.value as Vessel);
+          message.success(`Updated vessel: ${formValue.value.name}`);
+        } else {
+          emitAddVessel(formValue.value);
+          message.success(`Started tracking vessel: ${formValue.value.name}`);
+        }
+        emit('update:show', false);
       })
       .catch((errors) => {
-        message.error('Failed to track Vessel');
+        message.error(`Failed to ${isEditing.value ? 'update' : 'track'} vessel`);
         console.log('Form validation failed:', errors);
       });
   }
 };
 
-const handleModelClose = () => {
-  show.value = false;
-  formValue.value = { name: '', latitude: 0, longitude: 0 };
+const resetForm = () => {
+  if (!isEditing.value) {
+    formValue.value = {
+      name: '',
+      latitude: 0,
+      longitude: 0,
+    };
+  }
 };
 </script>
 

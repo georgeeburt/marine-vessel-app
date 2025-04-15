@@ -7,7 +7,7 @@
             <Sidebar @open-modal="showModal = true" />
             <Map />
           </div>
-          <TrackForm v-model:show="showModal" />
+          <VesselFormModal :show="showModal" @update:show="showModal = $event" />
         </n-dialog-provider>
       </n-modal-provider>
     </n-message-provider>
@@ -22,7 +22,7 @@ import {
   NMessageProvider,
   NDialogProvider,
 } from 'naive-ui';
-import TrackForm from './components/modals/TrackModal.vue';
+import VesselFormModal from './components/ui/VesselFormModal.vue';
 import Sidebar from './components/sidebar/Sidebar.vue';
 import Map from './components/map/Map.vue';
 import type { GlobalThemeOverrides } from 'naive-ui';

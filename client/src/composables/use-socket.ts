@@ -25,6 +25,19 @@ export const useSocket = () => {
 
     socket.on('vessel:update', (updatedVessel) => {
       vesselStore.updateVessel(updatedVessel);
+      const existingMarker = markerStore.markers.find((marker) => marker.id === updatedVessel.id);
+
+      if (existingMarker) {
+        existingMarker.marker.position = {
+          lat: updatedVessel.latitude,
+          lng: updatedVessel.longitude,
+        };
+        markerStore.updateMarker({
+          ...updatedVessel,
+          marker: existingMarker.marker
+        })
+      }
+
       markerStore.updateMarker({
         ...updatedVessel,
         marker: new google.maps.marker.AdvancedMarkerElement({
