@@ -93,6 +93,12 @@ const handleDeleteConfirm = () => {
   opacity: 0;
 }
 
+.vessel-card {
+  margin-right: 9px;
+  min-width: 100px;
+  width: 95%
+}
+
 .vessel-card:hover {
   background-color: #3347af;
   cursor: pointer;

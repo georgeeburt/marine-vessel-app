@@ -34,7 +34,7 @@ const filteredVessels = computed(() => {
   list-style: none;
   padding: 0;
   overflow-y: auto;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
   width: 100%;
 }
 
