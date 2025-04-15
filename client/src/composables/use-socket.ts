@@ -12,15 +12,6 @@ export const useSocket = () => {
   const listenToVesselEvents = () => {
     socket.on('vessel:add', (vessel) => {
       vesselStore.addVessel(vessel);
-      const newMarker = new google.maps.marker.AdvancedMarkerElement({
-        position: { lat: vessel.latitude, lng: vessel.longitude },
-        map: map.value,
-        title: vessel.name,
-      });
-      markerStore.addMarker({
-        ...vessel,
-        newMarker,
-      });
     });
 
     socket.on('vessel:update', (updatedVessel) => {

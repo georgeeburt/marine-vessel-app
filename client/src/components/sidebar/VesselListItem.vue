@@ -67,7 +67,7 @@ const handleDeleteConfirm = () => {
     negativeText: 'Cancel',
     onPositiveClick: () => {
       handleDelete();
-      message.success(`Failed to delete vessel: ${props.vessel.name}`);
+      message.success(`Successfully deleted Vessel: ${props.vessel.name}`);
     },
     onNegativeClick: () => {
       deleteDialog.destroyAll();
