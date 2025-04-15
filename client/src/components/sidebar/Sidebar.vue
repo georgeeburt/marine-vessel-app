@@ -73,7 +73,7 @@ const searchQuery = ref('');
 /* InfoWindow styling */
 .gm-style .gm-style-iw-c {
   background-color: #293783;
-  padding: 0 !important;
+  padding: 0px !important;
   border-radius: 8px !important;
 }
 
@@ -82,14 +82,17 @@ const searchQuery = ref('');
   color: #dbdbdb;
   overflow: hidden !important;
   padding: 15px;
+  gap: 2px;
 }
 
 .gm-style .gm-style-iw-tc::after {
   background: #293783 !important;
+  padding: 0px;
 }
 
 .gm-style .gm-style-iw button.gm-ui-hover-effect {
   background-color: #4d6bfe;
+  padding: 0px;
   border-radius: 50% !important;
 }
 
@@ -97,5 +100,8 @@ const searchQuery = ref('');
 .gm-style .gm-style-iw button.gm-ui-hover-effect span {
   filter: invert(41%) sepia(94%) saturate(1307%) hue-rotate(217deg) brightness(100%)
     contrast(101%) !important;
+}
+.gm-style-iw.gm-style-iw-c > div {
+  padding-top: 0 !important;
 }
 </style>

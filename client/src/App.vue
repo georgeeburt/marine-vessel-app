@@ -46,6 +46,8 @@ const themeOverrides: GlobalThemeOverrides = {
     borderRadius: '5px',
     borderColor: '#384db4',
     textColor: '#dbdbdb',
+    titleFontWeight: '200',
+    titleFontSizeMedium: '17px',
   },
   Dialog: {
     color: '#1B2454',
@@ -63,7 +65,7 @@ const themeOverrides: GlobalThemeOverrides = {
     colorFocusWarning: '#10142e',
     colorFocusSuccess: '#10142e',
     colorFocusInfo: '#10142e',
-    textColor: '#7c7c7c',
+    textColor: '#b2b2b2',
     placeholderColor: '#7c7c7c',
   },
   Message: {

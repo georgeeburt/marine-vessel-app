@@ -7,20 +7,30 @@
   >
     <template #header-extra>
       <div class="card-action-icons">
-        <n-icon
-          class="edit-icon"
-          :component="Edit"
-          @click="showEditModal = true"
-          color="#dbdbdb"
-          size="20"
-        />
-        <n-icon
-          class="delete-icon"
-          :component="TrashSharp"
-          @click="handleDeleteConfirm()"
-          color="#dbdbdb"
-          size="20"
-        />
+        <n-tooltip placement="bottom">
+          <template #trigger>
+            <n-icon
+              class="edit-icon"
+              :component="Edit"
+              @click="showEditModal = true"
+              color="#dbdbdb"
+              size="20"
+            />
+          </template>
+          <span>Edit</span>
+        </n-tooltip>
+        <n-tooltip placement="bottom">
+          <template #trigger>
+            <n-icon
+            class="delete-icon"
+            :component="TrashSharp"
+            @click="handleDeleteConfirm()"
+            color="#dbdbdb"
+            size="20"
+            />
+          </template>
+          <span>Delete</span>
+        </n-tooltip>
       </div>
     </template>
   </n-card>
@@ -36,7 +46,7 @@
 import { defineProps, ref } from 'vue';
 import { map } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
-import { useDialog, useMessage, NCard, NIcon } from 'naive-ui';
+import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
 import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '../../composables/use-socket';
 import { useMarkerStore } from '../../stores/marker-store';
@@ -96,7 +106,7 @@ const handleDeleteConfirm = () => {
 .vessel-card {
   margin-right: 9px;
   min-width: 100px;
-  width: 95%
+  width: 95%;
 }
 
 .vessel-card:hover {

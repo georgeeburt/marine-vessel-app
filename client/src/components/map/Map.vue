@@ -47,6 +47,9 @@ onMounted(async () => {
         },
         strictBounds: true,
       },
+      streetViewControl: false,
+      colorScheme: 'DARK',
+      mapTypeControl: false,
     });
     setMap(map);
 
