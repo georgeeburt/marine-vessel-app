@@ -1,15 +1,20 @@
 <template>
   <aside id="sidebar">
     <div class="action-container">
-      <n-input v-model:value="searchQuery" class="search" type="text" placeholder="Search for Vessel" clearable
+      <n-input
+        v-model:value="searchQuery"
+        class="search"
+        type="text"
+        placeholder="Search..."
+        clearable
         ><template #suffix><n-icon :component="Search" /></template
       ></n-input>
-      <NButton class="add-button" type="primary" @click="$emit('open-modal')">
+      <n-button class="add-button" type="primary" @click="$emit('open-modal')">
         <n-icon color="white" class="icon-spacing">
           <AddSharp />
         </n-icon>
         Add Vessel
-      </NButton>
+      </n-button>
     </div>
     <VesselList :filter-query="searchQuery" />
   </aside>
@@ -34,7 +39,7 @@ const searchQuery = ref('');
   padding: 25px;
   height: 100vh;
   width: 15%;
-  background-color: #e5e5e5;
+  background-color: #1b2454;
 }
 
 .action-container {
@@ -53,9 +58,9 @@ const searchQuery = ref('');
 
 .add-button {
   display: flex;
+  color: #dbdbdb;
   align-items: center;
   padding: 8px 12px;
-  white-space: normal;
 }
 
 .icon-spacing {

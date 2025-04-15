@@ -30,10 +30,29 @@ const filteredVessels = computed(() => {
 .vessel-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
   list-style: none;
   padding: 0;
   overflow-y: auto;
+  margin-bottom: 10px;
   width: 100%;
+}
+
+.vessel-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vessel-list::-webkit-scrollbar-track {
+  background: #253071;
+  border-radius: 4px;
+}
+
+.vessel-list::-webkit-scrollbar-thumb {
+  background: #3a4c99;
+  border-radius: 4px;
+}
+
+.vessel-list::-webkit-scrollbar-thumb:hover {
+  background: #475fc0;
 }
 </style>

@@ -1,18 +1,24 @@
 <template>
-  <n-card @click="focusVessel(vessel.id)" class="vessel" :title="vessel.name" :bordered="true">
+  <n-card
+    @click="focusVessel(vessel.id)"
+    class="vessel-card"
+    :title="vessel.name"
+    :bordered="true"
+  >
     <template #header-extra>
       <div class="card-action-icons">
         <n-icon
           class="edit-icon"
           :component="Edit"
           @click="showEditModal = true"
+          color="#dbdbdb"
           size="20"
         />
         <n-icon
           class="delete-icon"
           :component="TrashSharp"
           @click="handleDeleteConfirm()"
-          color="red"
+          color="#dbdbdb"
           size="20"
         />
       </div>
@@ -62,6 +68,7 @@ const handleDelete = () => {
 const handleDeleteConfirm = () => {
   deleteDialog.create({
     title: `Delete Vessel`,
+    type: 'warning',
     content: `Are you sure you want to delete ${props.vessel.name}?`,
     positiveText: 'Confirm',
     negativeText: 'Cancel',
@@ -82,11 +89,16 @@ const handleDeleteConfirm = () => {
   display: flex;
   gap: 5px;
   justify-content: center;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
   opacity: 0;
 }
 
-.vessel:hover .card-action-icons {
+.vessel-card:hover {
+  background-color: #3347af;
+  cursor: pointer;
+}
+
+.vessel-card:hover .card-action-icons {
   opacity: 1;
 }
 

@@ -32,8 +32,45 @@ const showModal = ref(false);
 const themeOverrides: GlobalThemeOverrides = {
   common: {
     primaryColor: '#4D6BFE',
-    primaryColorHover: '#4763ec',
     primaryColorPressed: '#3c53c4',
+    textColorBase: '#dbdbdb',
+    textColor1: '#dbdbdb',
+    textColor2: '#dbdbdb',
+    borderRadius: '5px',
+    borderColor: '#4D6BFE',
+    hoverColor: '#4D6BFE',
+    primaryColorHover: '#7b92ff',
+  },
+  Card: {
+    color: '#283783',
+    borderRadius: '5px',
+    borderColor: '#384db4',
+    textColor: '#dbdbdb',
+  },
+  Dialog: {
+    color: '#1B2454',
+    negativeColor: '#4D6BFE',
+    closeIconColor: '#4D6BFE',
+  },
+  Input: {
+    backgroundColor: '#141a3d',
+    iconColor: '#7c7c7c',
+    borderColorSuccess: '#4D6BFE',
+    boxShadowFocusSuccess: 'none',
+    color: '#141a3d',
+    colorFocus: '#10142e',
+    colorFocusError: '#10142e',
+    colorFocusWarning: '#10142e',
+    colorFocusSuccess: '#10142e',
+    colorFocusInfo: '#10142e',
+    textColor: '#7c7c7c',
+    placeholderColor: '#7c7c7c',
+  },
+  Message: {
+    colorError: '#293783',
+    colorSuccess: '#293783',
+    textColor: '#ffffff',
+    closeIconColor: '#4D6BFE',
   },
 };
 </script>
@@ -56,7 +93,6 @@ html {
 
 .custom-card {
   width: 35%;
-  background-color: #3e384c;
 }
 
 .action-buttons {

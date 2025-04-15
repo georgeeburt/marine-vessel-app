@@ -16,7 +16,9 @@ export const useSocket = () => {
 
     socket.on('vessel:update', (updatedVessel) => {
       vesselStore.updateVessel(updatedVessel);
-      const existingMarker = markerStore.markers.find((marker) => marker.id === updatedVessel.id);
+      const existingMarker = markerStore.markers.find(
+        (marker) => marker.id === updatedVessel.id
+      );
 
       if (existingMarker) {
         existingMarker.marker.position = {
@@ -25,8 +27,8 @@ export const useSocket = () => {
         };
         markerStore.updateMarker({
           ...updatedVessel,
-          marker: existingMarker.marker
-        })
+          marker: existingMarker.marker,
+        });
       }
 
       markerStore.updateMarker({
