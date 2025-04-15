@@ -34,6 +34,18 @@ onMounted(async () => {
       center: { lat: 0, lng: 0 },
       zoom: 3,
       mapId: import.meta.env.VITE_GOOGLE_MAPS_MAP_ID,
+      gestureHandling: 'greedy',
+      minZoom: 2.5,
+      maxZoom: 5,
+      restriction: {
+        latLngBounds: {
+          north: 85,
+          south: -85,
+          east: 180,
+          west: -180,
+        },
+        strictBounds: true,
+      },
     });
     setMap(map);
 
@@ -44,9 +56,9 @@ onMounted(async () => {
     )) as google.maps.MarkerLibrary;
 
     const PIN_STYLES = {
-      background: '#4D6BFE',
-      borderColor: '8DA0FF',
-      glyphColor: '#8DA0FF',
+      background: '#2C3D92',
+      borderColor: '#4D6BFE',
+      glyphColor: '#4D6BFE',
     };
 
     watch(
