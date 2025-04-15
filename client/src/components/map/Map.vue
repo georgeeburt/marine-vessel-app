@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { Loader } from '@googlemaps/js-api-loader';
 import { setMap } from './map-instance';
@@ -20,6 +20,7 @@ const markerStore = useMarkerStore();
 const { vessels } = storeToRefs(vesselStore);
 
 let map: google.maps.Map | null = null;
+let currentOpenInfoWindow = ref<google.maps.InfoWindow | null>(null);
 
 onMounted(async () => {
   try {
@@ -27,7 +28,7 @@ onMounted(async () => {
       apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
       version: 'quarterly',
     });
-    const { Map } = (await loader.importLibrary('maps')) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = (await loader.importLibrary('maps')) as google.maps.MapsLibrary;
     const mapElement = document.getElementById('map');
 
     map = new Map(mapElement as HTMLElement, {
@@ -54,12 +55,29 @@ onMounted(async () => {
     const { AdvancedMarkerElement, PinElement } = (await loader.importLibrary(
       'marker'
     )) as google.maps.MarkerLibrary;
-
     const PIN_STYLES = {
       background: '#2C3D92',
       borderColor: '#4D6BFE',
       glyphColor: '#4D6BFE',
     };
+
+    const getInfoWindowContent = (vessel: Vessel) => {
+      const currentVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+      return `
+        <div class="info-window">
+          <h3>${currentVessel.name}</h3>
+          <p>Latitude: ${currentVessel.latitude}</p>
+          <p>Longitude: ${currentVessel.longitude}</p>
+        </div>
+      `;
+    };
+
+    map.addListener("click", () => {
+      if (currentOpenInfoWindow.value) {
+        currentOpenInfoWindow.value.close();
+        currentOpenInfoWindow.value = null;
+      }
+    });
 
     watch(
       vessels,
@@ -72,6 +90,27 @@ onMounted(async () => {
               position: { lat: vessel.latitude, lng: vessel.longitude },
               title: vessel.name,
               content: pinBackground.element,
+            });
+
+            const infoWindow = new InfoWindow({
+              content: getInfoWindowContent(vessel),
+              position: { lat: vessel.latitude, lng: vessel.longitude },
+            });
+
+            marker.addListener('click', () => {
+              if (currentOpenInfoWindow.value) {
+                currentOpenInfoWindow.value.close();
+              }
+
+              const updatedVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+              infoWindow.setContent(getInfoWindowContent(updatedVessel));
+
+              infoWindow.open(map, marker);
+              currentOpenInfoWindow.value = infoWindow;
+            });
+
+            marker.addListener('click', () => {
+              infoWindow.open(map, marker);
             });
 
             markerStore.addMarker({ marker, ...vessel });
@@ -90,6 +129,22 @@ onMounted(async () => {
         content: pinBackground.element,
       });
 
+      const infoWindow = new InfoWindow({
+        content: getInfoWindowContent(vessel),
+        position: { lat: vessel.latitude, lng: vessel.longitude },
+      });
+
+      marker.addListener('click', () => {
+        if (currentOpenInfoWindow.value) {
+          currentOpenInfoWindow.value.close();
+        }
+
+        const updatedVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+        infoWindow.setContent(getInfoWindowContent(updatedVessel));
+
+        infoWindow.open(map, marker);
+        currentOpenInfoWindow.value = infoWindow;
+      });
       markerStore.addMarker({ marker, ...vessel });
     });
 
