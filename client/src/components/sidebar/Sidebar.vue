@@ -1,7 +1,7 @@
 <template>
   <aside id="sidebar">
     <div class="action-container">
-      <n-input class="search" type="text" placeholder="Search for Vessel"
+      <n-input v-model:value="searchQuery" class="search" type="text" placeholder="Search for Vessel" clearable
         ><template #suffix><n-icon :component="Search" /></template
       ></n-input>
       <NButton class="add-button" type="primary" @click="$emit('open-modal')">
@@ -11,16 +11,18 @@
         Add Vessel
       </NButton>
     </div>
-    <VesselList />
+    <VesselList :filter-query="searchQuery" />
   </aside>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { NButton, NIcon, NInput } from 'naive-ui';
 import { AddSharp, Search } from '@vicons/ionicons5';
 import VesselList from './VesselList.vue';
 
 defineEmits(['open-modal']);
+const searchQuery = ref('');
 </script>
 
 <style scoped>
