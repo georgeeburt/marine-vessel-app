@@ -106,6 +106,7 @@ const handleValidateClick = () => {
         formValue.value = { name: '', latitude: 0, longitude: 0 };
       })
       .catch((errors) => {
+        message.error('Failed to track Vessel');
         console.log('Form validation failed:', errors);
       });
   }

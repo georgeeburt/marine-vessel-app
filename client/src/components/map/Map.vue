@@ -52,7 +52,6 @@ onMounted(async () => {
     watch(
       vessels,
       (newVessels) => {
-        console.log('[watch] vessels changed:', newVessels);
         newVessels.forEach((vessel: Vessel) => {
           if (!markerStore.markers.find((marker) => marker.id === vessel.id)) {
             const pinBackground = new PinElement(PIN_STYLES);

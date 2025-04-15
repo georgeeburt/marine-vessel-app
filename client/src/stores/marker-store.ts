@@ -25,6 +25,8 @@ export const useMarkerStore = defineStore('marker', () => {
     if (markerToDelete) {
       markerToDelete.marker.map = null;
     }
+
+    markers.value = markers.value.filter((marker) => marker.id !== markerId);
   };
 
   const resetMarkers = () => {

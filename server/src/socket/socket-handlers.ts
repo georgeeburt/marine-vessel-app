@@ -69,7 +69,7 @@ export default function socketHandlers(socket: Socket, io: Server) {
         return;
       }
 
-      io.emit('vessel:delete', deletedVessel);
+      io.emit('vessel:delete', deletedVessel.id);
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message === 'Vessel not found') {
