@@ -33,9 +33,9 @@ const themeOverrides: GlobalThemeOverrides = {
   common: {
     primaryColor: '#4D6BFE',
     primaryColorPressed: '#3c53c4',
-    textColorBase: '#dbdbdb',
-    textColor1: '#dbdbdb',
-    textColor2: '#dbdbdb',
+    textColorBase: '#D8D8D9',
+    textColor1: '#D8D8D9',
+    textColor2: '#D8D8D9',
     borderRadius: '5px',
     borderColor: '#4D6BFE',
     hoverColor: '#4D6BFE',
@@ -73,6 +73,10 @@ const themeOverrides: GlobalThemeOverrides = {
     colorSuccess: '#293783',
     textColor: '#ffffff',
     closeIconColor: '#4D6BFE',
+  },
+  Tooltip: {
+    textColor: '#D8D8D8',
+    color: '#141A3C',
   },
 };
 </script>

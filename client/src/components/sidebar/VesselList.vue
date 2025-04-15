@@ -1,5 +1,6 @@
 <template>
   <div class="vessel-list">
+    <h3 class="vessel-list-title">Tracked Vessels ({{ vesselStore.vessels.length }})</h3>
     <VesselListItem v-for="vessel in filteredVessels" :key="vessel.id" :vessel="vessel" />
   </div>
 </template>
@@ -36,6 +37,13 @@ const filteredVessels = computed(() => {
   overflow-y: auto;
   margin-bottom: 50px;
   width: 100%;
+}
+
+.vessel-list-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #D8D8D9;
+  font-weight: 400;
 }
 
 .vessel-list::-webkit-scrollbar {
