@@ -1,8 +1,13 @@
 <template>
-  <n-card class="vessel" :title="vessel.name" :bordered="true">
+  <n-card @click="focusVessel(vessel.id)" class="vessel" :title="vessel.name" :bordered="true">
     <template #header-extra>
       <div class="card-action-icons">
-        <n-icon class="edit-icon" :component="Edit" @click="showEditModal = true"  size="20" />
+        <n-icon
+          class="edit-icon"
+          :component="Edit"
+          @click="showEditModal = true"
+          size="20"
+        />
         <n-icon
           class="delete-icon"
           :component="TrashSharp"
@@ -23,22 +28,32 @@
 
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
+import { map } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
 import { useDialog, useMessage, NCard, NIcon } from 'naive-ui';
 import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '../../composables/use-socket';
+import { useMarkerStore } from '../../stores/marker-store';
 import VesselFormModal from '../ui/VesselFormModal.vue';
 import type { Vessel } from '@shared/types/vessel';
 
 const props = defineProps<{
   vessel: Vessel;
 }>();
-
+const markerStore = useMarkerStore();
 const { emitDeleteVessel } = useSocket();
 const deleteDialog = useDialog();
 const showEditModal = ref(false);
 
 const message = useMessage();
+
+const focusVessel = (vesselId: number) => {
+  const marker = markerStore.markers.find((marker) => marker.id === vesselId);
+  if (marker && map.value) {
+    map.value.panTo({ lat: marker.latitude, lng: marker.longitude });
+    map.value.setZoom(6);
+  }
+};
 
 const handleDelete = () => {
   emitDeleteVessel(props.vessel);
