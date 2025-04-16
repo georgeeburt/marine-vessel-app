@@ -51,6 +51,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { useSocket } from '../../composables/use-socket';
+import { useVesselStore } from '../../stores/vessel-store';
 import {
   NForm,
   NFormItem,
@@ -60,7 +61,7 @@ import {
   NModal,
   useMessage,
 } from 'naive-ui';
-import type { FormInst } from 'naive-ui';
+import type { FormInst, FormItemRule } from 'naive-ui';
 import type { Vessel } from '@shared/types/vessel';
 
 const props = defineProps<{
@@ -71,10 +72,10 @@ const props = defineProps<{
 const emit = defineEmits(['update:show']);
 const message = useMessage();
 const { emitAddVessel, emitUpdateVessel } = useSocket();
+const vesselStore = useVesselStore();
 
 const formRef = ref<FormInst | null>(null);
 const formValue = ref<{
-  id?: number;
   name: string;
   latitude: number;
   longitude: number;
@@ -95,29 +96,55 @@ watch(
   },
   { immediate: true }
 );
+// @ts-ignore: Parameter required by Naive UI but not used in function
+const validateVesselName = (rule: FormItemRule, newName: string): boolean => {
+  if (isEditing.value && props.vessel && props.vessel.name.toLowerCase() === newName) {
+    return true;
+  }
 
-const rules = {
-  name: {
-    required: true,
-    trigger: ['input', 'blur'],
-    message: 'Please enter a vessel name',
-  },
-  latitude: {
-    required: true,
-    trigger: ['input', 'blur'],
-    message: 'Please enter a latitude',
-    type: 'number' as const,
-  },
-  longitude: {
-    required: true,
-    trigger: ['input', 'blur'],
-    message: 'Please enter a longitude',
-    type: 'number' as const,
-  },
+  const exists = vesselStore.vessels.some(
+    (vessel) => vessel.name.toLowerCase() === newName
+  );
+  if (exists) {
+    return false;
+  }
+
+  return true;
 };
 
+const rules = {
+  name: [
+    {
+      required: true,
+      trigger: ['input', 'blur'],
+      message: 'Please enter a vessel name',
+    },
+    {
+      validator: validateVesselName,
+      trigger: ['input', 'blur'],
+      message: 'Vessel name already exists',
+    }
+  ],
+  latitude: [
+    {
+      required: true,
+      trigger: ['input', 'blur'],
+      message: 'Please enter a latitude',
+      type: 'number' as const,
+    },
+  ],
+  longitude: [
+    {
+      required: true,
+      trigger: ['input', 'blur'],
+      message: 'Please enter a longitude',
+      type: 'number' as const,
+    },
+  ],
+};
 const handleValidateClick = () => {
   if (formRef.value) {
+    formValue.value.name = formValue.value.name.toLowerCase();
     formRef.value
       .validate()
       .then(() => {
@@ -130,9 +157,8 @@ const handleValidateClick = () => {
         }
         emit('update:show', false);
       })
-      .catch((errors) => {
+      .catch(() => {
         message.error(`Failed to ${isEditing.value ? 'update' : 'track'} vessel`);
-        console.log('Form validation failed:', errors);
       });
   }
 };
