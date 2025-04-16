@@ -22,6 +22,36 @@ const { vessels } = storeToRefs(vesselStore);
 let map: google.maps.Map | null = null;
 let currentOpenInfoWindow = ref<google.maps.InfoWindow | null>(null);
 
+const attachMarkerListeners = (
+  marker: google.maps.marker.AdvancedMarkerElement,
+  infoWindow: google.maps.InfoWindow,
+  vessel: Vessel,
+  getInfoWindowContent: Function
+) => {
+  marker.addListener('click', () => {
+    if (currentOpenInfoWindow.value) {
+      currentOpenInfoWindow.value.close();
+    }
+
+    const updatedVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+    infoWindow.setContent(getInfoWindowContent(updatedVessel));
+
+    infoWindow.open(map, marker);
+    currentOpenInfoWindow.value = infoWindow;
+  });
+};
+
+const getInfoWindowContent = (vessel: Vessel) => {
+  const currentVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+  return `
+    <div class="info-window">
+      <h3>${currentVessel.name}</h3>
+      <p>Latitude: ${currentVessel.latitude}</p>
+      <p>Longitude: ${currentVessel.longitude}</p>
+    </div>
+  `;
+};
+
 onMounted(async () => {
   try {
     const loader = new Loader({
@@ -64,17 +94,6 @@ onMounted(async () => {
       glyphColor: '#4D6BFE',
     };
 
-    const getInfoWindowContent = (vessel: Vessel) => {
-      const currentVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
-      return `
-        <div class="info-window">
-          <h3>${currentVessel.name}</h3>
-          <p>Latitude: ${currentVessel.latitude}</p>
-          <p>Longitude: ${currentVessel.longitude}</p>
-        </div>
-      `;
-    };
-
     map.addListener("click", () => {
       if (currentOpenInfoWindow.value) {
         currentOpenInfoWindow.value.close();
@@ -100,21 +119,7 @@ onMounted(async () => {
               position: { lat: vessel.latitude, lng: vessel.longitude },
             });
 
-            marker.addListener('click', () => {
-              if (currentOpenInfoWindow.value) {
-                currentOpenInfoWindow.value.close();
-              }
-
-              const updatedVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
-              infoWindow.setContent(getInfoWindowContent(updatedVessel));
-
-              infoWindow.open(map, marker);
-              currentOpenInfoWindow.value = infoWindow;
-            });
-
-            marker.addListener('click', () => {
-              infoWindow.open(map, marker);
-            });
+            attachMarkerListeners(marker, infoWindow, vessel, getInfoWindowContent);
 
             markerStore.addMarker({ marker, ...vessel });
           }
@@ -137,17 +142,7 @@ onMounted(async () => {
         position: { lat: vessel.latitude, lng: vessel.longitude },
       });
 
-      marker.addListener('click', () => {
-        if (currentOpenInfoWindow.value) {
-          currentOpenInfoWindow.value.close();
-        }
-
-        const updatedVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
-        infoWindow.setContent(getInfoWindowContent(updatedVessel));
-
-        infoWindow.open(map, marker);
-        currentOpenInfoWindow.value = infoWindow;
-      });
+      attachMarkerListeners(marker, infoWindow, vessel, getInfoWindowContent);
       markerStore.addMarker({ marker, ...vessel });
     });
 
