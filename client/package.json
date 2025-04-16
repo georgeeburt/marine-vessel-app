@@ -6,20 +6,29 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
     "naive-ui": "^2.41.0",
+    "pinia": "^3.0.2",
+    "socket.io-client": "^4.8.1",
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@pinia/testing": "^1.0.1",
+    "@testing-library/vue": "^8.1.0",
     "@types/google.maps": "^3.58.1",
     "@vicons/ionicons5": "^0.13.0",
-    "@vitejs/plugin-vue": "^5.2.1",
+    "@vicons/tabler": "^0.13.0",
+    "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",
+    "jsdom": "^26.1.0",
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vitest": "^3.1.1",
     "vue-tsc": "^2.2.4"
   }
 }
