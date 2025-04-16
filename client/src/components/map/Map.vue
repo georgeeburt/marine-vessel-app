@@ -26,14 +26,14 @@ const attachMarkerListeners = (
   marker: google.maps.marker.AdvancedMarkerElement,
   infoWindow: google.maps.InfoWindow,
   vessel: Vessel,
-  getInfoWindowContent: Function
+  getInfoWindowContent: (vessel: Vessel) => string
 ) => {
   marker.addListener('click', () => {
     if (currentOpenInfoWindow.value) {
       currentOpenInfoWindow.value.close();
     }
 
-    const updatedVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+    const updatedVessel = vessels.value.find((v) => v.id === vessel.id) || vessel;
     infoWindow.setContent(getInfoWindowContent(updatedVessel));
 
     infoWindow.open(map, marker);
@@ -42,7 +42,7 @@ const attachMarkerListeners = (
 };
 
 const getInfoWindowContent = (vessel: Vessel) => {
-  const currentVessel = vessels.value.find(v => v.id === vessel.id) || vessel;
+  const currentVessel = vessels.value.find((v) => v.id === vessel.id) || vessel;
   return `
     <div class="info-window">
       <h3>${currentVessel.name}</h3>
@@ -58,7 +58,9 @@ onMounted(async () => {
       apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
       version: 'quarterly',
     });
-    const { Map, InfoWindow } = (await loader.importLibrary('maps')) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = (await loader.importLibrary(
+      'maps'
+    )) as google.maps.MapsLibrary;
     const mapElement = document.getElementById('map');
 
     map = new Map(mapElement as HTMLElement, {
@@ -94,7 +96,7 @@ onMounted(async () => {
       glyphColor: '#4D6BFE',
     };
 
-    map.addListener("click", () => {
+    map.addListener('click', () => {
       if (currentOpenInfoWindow.value) {
         currentOpenInfoWindow.value.close();
         currentOpenInfoWindow.value = null;

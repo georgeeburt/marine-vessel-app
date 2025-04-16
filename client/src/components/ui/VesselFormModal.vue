@@ -96,7 +96,7 @@ watch(
   },
   { immediate: true }
 );
-// @ts-ignore: Parameter required by Naive UI but not used in function
+//@ts-expect-error: Parameter required by Naive UI but not used in function
 const validateVesselName = (rule: FormItemRule, newName: string): boolean => {
   if (isEditing.value && props.vessel && props.vessel.name.toLowerCase() === newName) {
     return true;
@@ -123,7 +123,7 @@ const rules = {
       validator: validateVesselName,
       trigger: ['input', 'blur'],
       message: 'Vessel name already exists',
-    }
+    },
   ],
   latitude: [
     {

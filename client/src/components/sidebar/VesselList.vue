@@ -42,7 +42,7 @@ const filteredVessels = computed(() => {
 .vessel-list-title {
   margin: 0;
   font-size: 1.5rem;
-  color: #D8D8D9;
+  color: #d8d8d9;
   font-weight: 400;
 }
 

@@ -22,11 +22,11 @@
         <n-tooltip placement="bottom">
           <template #trigger>
             <n-icon
-            class="delete-icon"
-            :component="TrashSharp"
-            @click="handleDeleteConfirm()"
-            color="#dbdbdb"
-            size="20"
+              class="delete-icon"
+              :component="TrashSharp"
+              @click="handleDeleteConfirm()"
+              color="#dbdbdb"
+              size="20"
             />
           </template>
           <span>Delete</span>
