@@ -99,11 +99,9 @@ PORT=port_number
 
 - Create a `.env` file in the `/client` directory and populate with environment variables:
 ```
-
 VITE_API_URL=backend_api_url
-VITE_GOOGLE_MAPS_MAP_ID=your_google_maps_map_id
 VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-
+VITE_GOOGLE_MAPS_MAP_ID=your_google_maps_map_id
 ```
 
 ### 4. Set up and seed the database:
