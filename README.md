@@ -40,7 +40,6 @@ marine-vessel-app/
 ├── server/                 # Express.js backend
 │   ├── src/
 │   │   ├── controllers/    # API controllers
-│   │   ├── models/         # Data models
 │   │   ├── routes/         # API routes
 │   │   ├── services/       # Business logic
 │   │   └── socket/         # Socket.io handlers
