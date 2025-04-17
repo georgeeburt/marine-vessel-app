@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { getMap } from '../components/map/map-instance';
+import { getMap } from '@/components/map/map-instance';
 import type { VesselMarker } from '@shared/types/vessel-marker';
 
 export const useMarkerStore = defineStore('marker', () => {

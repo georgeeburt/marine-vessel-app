@@ -50,8 +50,8 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { useSocket } from '../../composables/use-socket';
-import { useVesselStore } from '../../stores/vessel-store';
+import { useSocket } from '@/composables/use-socket';
+import { useVesselStore } from '@/stores/vessel-store';
 import {
   NForm,
   NFormItem,

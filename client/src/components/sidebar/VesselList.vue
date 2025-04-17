@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useVesselStore } from '../../stores/vessel-store';
+import { useVesselStore } from '@/stores/vessel-store';
 import VesselListItem from './VesselListItem.vue';
 
 const props = defineProps({

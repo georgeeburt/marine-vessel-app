@@ -9,10 +9,10 @@ import { ref, onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { Loader } from '@googlemaps/js-api-loader';
 import { setMap } from './map-instance';
-import { useSocket } from '../../composables/use-socket';
-import { useVesselStore } from '../../stores/vessel-store';
-import { useMarkerStore } from '../../stores/marker-store';
-import { useVesselData } from '../../composables/use-vessel-data';
+import { useSocket } from '@/composables/use-socket';
+import { useVesselStore } from '@/stores/vessel-store';
+import { useMarkerStore } from '@/stores/marker-store';
+import { useVesselData } from '@/composables/use-vessel-data';
 import type { Vessel } from '@shared/types/vessel';
 
 const vesselStore = useVesselStore();

@@ -20,7 +20,7 @@ A real-time marine vessel tracking application built with Vue + TypeScript for t
 - Real-time updates with Socket.io
 - Filter vessels by name
 - Add, edit, and delete vessels
--Pan to vessel location on the map from sidebar
+- Pan to vessel location on the map from sidebar
 
 
 ## Project Structure
@@ -99,9 +99,9 @@ PORT=port_number
 
 - Create a `.env` file in the `/client` directory and populate with environment variables:
 ```
-VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 VITE_API_URL=backend_api_url
-
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+VITE_GOOGLE_MAPS_MAP_ID=your_google_maps_map_id
 ```
 
 ### 4. Set up and seed the database:
