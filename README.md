@@ -100,7 +100,6 @@ PORT=port_number
 
 - Create a `.env` file in the `/client` directory and populate with environment variables:
 ```
-VITE_API_URL=http://localhost:3000
 VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 VITE_API_URL=backend_api_url
 
