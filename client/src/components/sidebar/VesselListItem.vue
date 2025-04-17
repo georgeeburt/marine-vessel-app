@@ -46,11 +46,11 @@
 import { defineProps, ref } from 'vue';
 import { map } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
-import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
 import { TrashSharp } from '@vicons/ionicons5';
-import { useSocket } from '../../composables/use-socket';
-import { useMarkerStore } from '../../stores/marker-store';
+import { useSocket } from '@/composables/use-socket';
+import { useMarkerStore } from '@/stores/marker-store';
 import VesselFormModal from '../ui/VesselFormModal.vue';
+import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
 import type { Vessel } from '@shared/types/vessel';
 
 const props = defineProps<{

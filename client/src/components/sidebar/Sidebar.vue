@@ -25,6 +25,7 @@ import { ref } from 'vue';
 import { NButton, NIcon, NInput } from 'naive-ui';
 import { AddSharp, Search } from '@vicons/ionicons5';
 import VesselList from './VesselList.vue';
+import '@/assets/styles/map.css';
 
 defineEmits(['open-modal']);
 const searchQuery = ref('');
@@ -59,49 +60,11 @@ const searchQuery = ref('');
 
 .add-button {
   display: flex;
-  color: #dbdbdb;
   align-items: center;
   padding: 8px 12px;
 }
 
 .icon-spacing {
   margin-right: 4px;
-}
-</style>
-
-<style>
-/* InfoWindow styling */
-.gm-style .gm-style-iw-c {
-  background-color: #293783;
-  padding: 0px !important;
-  border-radius: 8px !important;
-}
-
-.gm-style .gm-style-iw-d {
-  background-color: #293783;
-  color: #dbdbdb;
-  overflow: hidden !important;
-  padding: 15px;
-  gap: 2px;
-}
-
-.gm-style .gm-style-iw-tc::after {
-  background: #293783 !important;
-  padding: 0px;
-}
-
-.gm-style .gm-style-iw button.gm-ui-hover-effect {
-  background-color: #4d6bfe;
-  padding: 0px;
-  border-radius: 50% !important;
-}
-
-.gm-style .gm-style-iw button.gm-ui-hover-effect img,
-.gm-style .gm-style-iw button.gm-ui-hover-effect span {
-  filter: invert(41%) sepia(94%) saturate(1307%) hue-rotate(217deg) brightness(100%)
-    contrast(101%) !important;
-}
-.gm-style-iw.gm-style-iw-c > div {
-  padding-top: 0 !important;
 }
 </style>

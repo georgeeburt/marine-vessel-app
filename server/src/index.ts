@@ -1,11 +1,11 @@
 import express from 'express';
 import http from 'node:http';
 import cors from 'cors';
-import { Server } from 'socket.io';
-import vesselRoutes from './routes/vessel-routes';
-import socketConfig from './config/socket-config';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { Server } from 'socket.io';
+import vesselRoutes from './routes/vessel-routes';
+import socketConfig from './socket/socket-config';
 dotenv.config();
 
 export const app = express();
@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
 

@@ -1,4 +1,4 @@
-import { useVesselStore } from '../stores/vessel-store';
+import { useVesselStore } from '@/stores/vessel-store';
 
 export const useVesselData = async () => {
   const vesselStore = useVesselStore();

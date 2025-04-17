@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
-import { map } from '../components/map/map-instance';
-import { useVesselStore } from '../stores/vessel-store';
-import { useMarkerStore } from '../stores/marker-store';
+import { map } from '@/components/map/map-instance';
+import { useVesselStore } from '@/stores/vessel-store';
+import { useMarkerStore } from '@/stores/marker-store';
 import type { Vessel, NewVessel } from '@shared/types/vessel';
 
 export const useSocket = () => {
