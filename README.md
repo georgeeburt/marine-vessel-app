@@ -11,6 +11,7 @@ A real-time marine vessel tracking application built with Vue + TypeScript for t
 [![Socket.io](https://img.shields.io/badge/Socket.io%20-%20%235C5C5C?style=for-the-badge&logo=socketdotio)](https://socket.io/)
 [![Vitest](https://img.shields.io/badge/vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
 [![Supertest](https://img.shields.io/badge/supertest-ff69b4?style=for-the-badge)](https://github.com/visionmedia/supertest)
+[![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 </div>
 
 ## Features
@@ -33,13 +34,13 @@ marine-vessel-app/
 │   │   │   ├── sidebar/    # Sidebar components
 │   │   │   └── ui/         # Reusable UI components
 │   │   ├── composables/    # Vue composables
-│   │   ├── stores/         # Pinia stores
-│   │   └── types/          # TypeScript type definitions
+│   │   └── stores/         # Pinia stores
 │   ├── tests/              # Frontend tests
 │   └── ...
 ├── server/                 # Express.js backend
 │   ├── src/
 │   │   ├── controllers/    # API controllers
+│   │   ├── models/         # Data models
 │   │   ├── routes/         # API routes
 │   │   ├── services/       # Business logic
 │   │   └── socket/         # Socket.io handlers
@@ -51,14 +52,44 @@ marine-vessel-app/
 ```
 
 ## Getting Started
-### Prerequisites
-- Node.js (v18+)
-- pnpm (v10+)
-- PostgreSQL Database
 
-## Installation
+### Installation
 
-### 1. Clone the repository:
+### Docker Setup (Recommended for Quick Start)
+
+#### Prerequisites
+
+- [Docker](https://www.docker.com/)
+
+#### 1. Clone the repository:
+```bash
+git clone https://github.com/georgeeburt/marine-vessel-app.git
+cd marine-vessel-app
+```
+
+#### Create a `.env.docker` file in the root directory and populate with environment variables:
+
+```
+DATABASE_URL=your_db_url
+VITE_API_URL=vite_api_url
+VITE_GOOGLE_MAPS_MAP_ID=your_google_maps_map_id
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+```
+
+#### 2. Start the containers with Docker Compose:
+
+```bash
+docker-compose up
+```
+
+### Manual Installation
+
+#### Prerequisites
+- [Node.js (v18+)](https://nodejs.org/en)
+- [pnpm (v10+)](https://pnpm.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+
+#### 1. Clone the repository:
 ```bash
 git clone https://github.com/georgeeburt/marine-vessel-app.git
 cd marine-vessel-app`
@@ -66,15 +97,15 @@ cd marine-vessel-app`
 
 ---
 
-### 2. Install dependencies:
-#### Install root dependencies:
+#### 2. Install dependencies:
+##### Install root dependencies:
 ```bash
 pnpm install
 ```
 
 ---
 
-#### Install client dependencies:
+##### Install client dependencies:
 ```bash
 cd client
 pnpm install
@@ -90,7 +121,7 @@ pnpm install
 cd ..
 ```
 
-### 3. Set up environment variables
+#### 3. Set up environment variables
 - Create a `.env` file in the `/server` directory and populate with environment variables:
 ```
 DATABASE_URL=postgres_db_url
@@ -99,12 +130,13 @@ PORT=port_number
 
 - Create a `.env` file in the `/client` directory and populate with environment variables:
 ```
-VITE_API_URL=backend_api_url
+VITE_API_URL=http://localhost:3000
 VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-VITE_GOOGLE_MAPS_MAP_ID=your_google_maps_map_id
+VITE_API_URL=backend_api_url
+
 ```
 
-### 4. Set up and seed the database:
+#### 4. Set up and seed the database:
 ```bash
 cd server
 pnpm prisma migrate dev

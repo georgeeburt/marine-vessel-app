@@ -13,6 +13,7 @@ import { useSocket } from '@/composables/use-socket';
 import { useVesselStore } from '@/stores/vessel-store';
 import { useMarkerStore } from '@/stores/marker-store';
 import { useVesselData } from '@/composables/use-vessel-data';
+import { capitaliseLetters } from '@/utils/text-formatters';
 import type { Vessel } from '@shared/types/vessel';
 
 const vesselStore = useVesselStore();
@@ -45,7 +46,7 @@ const getInfoWindowContent = (vessel: Vessel) => {
   const currentVessel = vessels.value.find((v) => v.id === vessel.id) || vessel;
   return `
     <div class="info-window">
-      <h3>${currentVessel.name}</h3>
+      <h3>${capitaliseLetters(currentVessel.name)}</h3>
       <p>Latitude: ${currentVessel.latitude}</p>
       <p>Longitude: ${currentVessel.longitude}</p>
     </div>

@@ -1,5 +1,5 @@
 /// <reference types="@types/google.maps" />
-import { vi } from "vitest";
+import { vi } from 'vitest';
 
 export const createMockGoogleMarker = () =>
   ({

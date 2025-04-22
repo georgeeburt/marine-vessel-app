@@ -2,7 +2,9 @@ import express from 'express';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { createTestServer } from '../../helpers/test-server';
 import { mockVessels } from '../../mocks/vessels';
+import type { Vessel } from '../../../../shared/types/vessel';
 import type { Server } from 'http';
+import supertest from 'supertest';
 
 const testApp = express();
 testApp.get('/api/vessels', (req, res) => {
@@ -15,7 +17,7 @@ testApp.get('/api/vessels/empty', (req, res) => {
 
 describe('Vessel Routes', () => {
   let server: Server;
-  let request: any;
+  let request: ReturnType<typeof supertest>;
 
   beforeAll(() => {
     const testServer = createTestServer(testApp);
@@ -35,7 +37,7 @@ describe('Vessel Routes', () => {
       expect(response.body).toBeInstanceOf(Array);
 
       if (response.body.length > 0) {
-        response.body.forEach((vessel: any) => {
+        response.body.forEach((vessel: Vessel) => {
           expect(vessel).toHaveProperty('id');
           expect(vessel).toHaveProperty('name');
           expect(vessel).toHaveProperty('latitude');

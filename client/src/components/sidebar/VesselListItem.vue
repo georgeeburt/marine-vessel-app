@@ -2,8 +2,9 @@
   <n-card
     @click="focusVessel(vessel.id)"
     class="vessel-card"
-    :title="vessel.name"
+    :title="capitaliseLetters(vessel.name)"
     :bordered="true"
+    :segmented="{ content: true }"
   >
     <template #header-extra>
       <div class="card-action-icons">
@@ -33,6 +34,13 @@
         </n-tooltip>
       </div>
     </template>
+    <div class="card-content">
+      <p>
+        Latitude: {{ vessel.latitude }}
+        <br />
+        Longitude: {{ vessel.longitude }}
+      </p>
+    </div>
   </n-card>
 
   <VesselFormModal
@@ -43,12 +51,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { map } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
 import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '@/composables/use-socket';
 import { useMarkerStore } from '@/stores/marker-store';
+import { capitaliseLetters } from '@/utils/text-formatters';
 import VesselFormModal from '../ui/VesselFormModal.vue';
 import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
 import type { Vessel } from '@shared/types/vessel';

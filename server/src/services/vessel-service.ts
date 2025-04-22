@@ -22,6 +22,12 @@ export const createVessel = async (name: string, latitude: number, longitude: nu
       throw new Error('A vessel with this name already exists');
     }
 
+    if (latitude < -90 || latitude > 90) {
+      throw new Error('Latitude must be between -90 and 90');
+    } else if (longitude < -180 || longitude > 180) {
+      throw new Error('Longitude must be between -180 and 180');
+    }
+
     const vessel = await prisma.vessel.create({
       data: {
         name,
@@ -49,6 +55,12 @@ export async function updateVessel(
 
     if (existingVessel && existingVessel.id !== id) {
       throw new Error('A vessel with this name already exists');
+    }
+
+    if (latitude < -90 || latitude > 90) {
+      throw new Error('Latitude must be between -90 and 90');
+    } else if (longitude < -180 || longitude > 180) {
+      throw new Error('Longitude must be between -180 and 180');
     }
 
     const updatedVessel = await prisma.vessel.update({
