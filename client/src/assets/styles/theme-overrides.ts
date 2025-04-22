@@ -1,4 +1,4 @@
-import type { GlobalThemeOverrides } from "naive-ui";
+import type { GlobalThemeOverrides } from 'naive-ui';
 
 export const themeOverrides: GlobalThemeOverrides = {
   common: {
@@ -17,8 +17,7 @@ export const themeOverrides: GlobalThemeOverrides = {
     borderRadius: '5px',
     borderColor: '#384db4',
     textColor: '#dbdbdb',
-    titleFontWeight: '200',
-    titleFontSizeMedium: '17px',
+    titleFontWeight: '450',
   },
   Dialog: {
     color: '#1B2454',

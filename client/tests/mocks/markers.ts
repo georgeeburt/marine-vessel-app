@@ -1,5 +1,5 @@
-import { createMockGoogleMarker } from "./mock-marker";
-import type { VesselMarker } from "../../../shared/types/vessel-marker";
+import { createMockGoogleMarker } from './mock-marker';
+import type { VesselMarker } from '../../../shared/types/vessel-marker';
 
 export const mockVesselMarkers: VesselMarker[] = [
   {
