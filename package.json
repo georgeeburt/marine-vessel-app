@@ -2,6 +2,7 @@
   "name": "marine-vessel-app",
   "version": "1.0.0",
   "description": "A web application for visualising marine vessels' locations.",
+  "packageManager": "pnpm@10.8.1",
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -10,7 +11,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
-    "dotenv": "^16.4.7",
     "eslint": "^9.24.0",
     "eslint-plugin-vue": "^10.0.0",
     "globals": "^16.0.0",

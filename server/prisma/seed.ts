@@ -23,13 +23,34 @@ const mockVessels = [
 async function main() {
   console.log('Seeding database with mock vessels...');
 
-  for (const vessel of mockVessels) {
-    await prisma.vessel.create({
-      data: vessel,
-    });
-  }
+  try {
+    const count = await prisma.vessel.count();
 
-  console.log('Seeding completed!');
+    if (count > 0) {
+      console.log(`Database already has ${count} vessels. Skipping seeding.`);
+      return;
+    }
+
+    console.log('No vessels found. Creating mock vessels...');
+
+    await prisma.vessel.deleteMany();
+
+    for (const vessel of mockVessels) {
+      try {
+        await prisma.vessel.create({
+          data: vessel,
+        });
+        console.log(`Created vessel: ${vessel.name}`);
+      } catch (error) {
+        console.error(`Failed to create vessel ${vessel.name}:`, error);
+      }
+    }
+
+    console.log('Seeding completed successfully!');
+  } catch (error) {
+    console.error('Error during seeding:', error);
+    throw error;
+  }
 }
 
 main()

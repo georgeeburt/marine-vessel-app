@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { map } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
 import { TrashSharp } from '@vicons/ionicons5';
