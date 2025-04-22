@@ -1,67 +1,29 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render } from '@testing-library/vue';
-import { createTestingPinia } from '@pinia/testing';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { renderWithSetup } from '../../helpers/render-helper';
 import { mockVessels } from '../../mocks/vessels';
+import { mockVesselMarkers } from '../../mocks/markers';
+import { mockDialogCreate, naiveUIMocks, resetNaiveUIMocks } from '../../mocks/components/naive-ui-mocks';
 import VesselListItem from '../../../src/components/sidebar/VesselListItem.vue';
-
-const mockEmitUpdateVessel = vi.fn();
-vi.mock('@/composables/use-socket', () => ({
-  useSocket: () => ({
-    emitUpdateVessel: mockEmitUpdateVessel,
-    emitDeleteVessel: vi.fn()
-  })
-}));
 
 const vessel = mockVessels[0];
 
-const mockDialogCreate = vi.fn();
+vi.mock('naive-ui', () => naiveUIMocks);
 
-vi.mock('naive-ui', async () => {
-  return {
-    useDialog: () => ({
-      create: mockDialogCreate,
-      destroyAll: vi.fn(),
-      success: vi.fn(),
-      warning: vi.fn(),
-      error: vi.fn(),
-      info: vi.fn()
-    }),
-    useMessage: () => ({ success: vi.fn() }),
-    NCard: {
-      template: '<div class="mock-card"><slot /><slot name="header-extra" /></div>',
-    },
-    NIcon: { template: '<div class="mock-icon"></div>' },
-    NTooltip: { template: '<div><slot /><slot name="trigger" /></div>' },
-  };
-});
-
-describe('VesselListItem', () => {
+describe('VesselListItem component', () => {
   beforeEach(() => {
-    render(VesselListItem, {
+    renderWithSetup(VesselListItem, {
       props: { vessel },
-      global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-            initialState: {
-              vessel: {
-                vessels: mockVessels,
-              },
-              marker: {
-                markers: mockVessels.map((vessel) => ({ ...vessel, marker: {} })),
-              },
-            },
-          }),
-        ],
-        stubs: {
-          'n-tooltip': true,
-          'n-icon': true,
-          'n-card': { template: '<div><slot /><slot name="header-extra" /></div>' },
-          VesselFormModal: true,
-        },
-      },
+      stores: {
+        vessel: { vessels: mockVessels },
+        marker: { markers: mockVesselMarkers },
+      }
     });
   });
+
+  afterEach(() => {
+    resetNaiveUIMocks();
+  });
+
   it('should render vessel name', () => {
     const cardElement = document.querySelector('.vessel-card');
 
@@ -83,5 +45,13 @@ describe('VesselListItem', () => {
 
     expect(cardElement?.textContent).toContain(vessel.latitude.toString());
     expect(cardElement?.textContent).toContain(vessel.longitude.toString());
+  });
+
+  it('should open confirmation dialog on delete icon click', () => {
+    const deleteIcon = document.querySelector('.delete-icon');
+
+    deleteIcon?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+    expect(mockDialogCreate).toHaveBeenCalled();
   });
 });

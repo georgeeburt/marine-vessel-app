@@ -1,5 +1,6 @@
 <template>
   <n-modal
+    class="vessel-form-modal"
     :show="show"
     preset="dialog"
     :show-icon="false"
