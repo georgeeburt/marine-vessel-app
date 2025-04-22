@@ -1,7 +1,6 @@
 <template>
   <n-modal
     :show="show"
-    class="modal"
     preset="dialog"
     :show-icon="false"
     @update:show="$emit('update:show', $event)"

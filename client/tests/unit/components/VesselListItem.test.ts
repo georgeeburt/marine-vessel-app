@@ -1,14 +1,31 @@
-import { render } from '@testing-library/vue';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { render } from '@testing-library/vue';
 import { createTestingPinia } from '@pinia/testing';
-import VesselListItem from '../../../src/components/sidebar/VesselListItem.vue';
 import { mockVessels } from '../../mocks/vessels';
+import VesselListItem from '../../../src/components/sidebar/VesselListItem.vue';
+
+const mockEmitUpdateVessel = vi.fn();
+vi.mock('@/composables/use-socket', () => ({
+  useSocket: () => ({
+    emitUpdateVessel: mockEmitUpdateVessel,
+    emitDeleteVessel: vi.fn()
+  })
+}));
 
 const vessel = mockVessels[0];
 
+const mockDialogCreate = vi.fn();
+
 vi.mock('naive-ui', async () => {
   return {
-    useDialog: () => ({ create: vi.fn() }),
+    useDialog: () => ({
+      create: mockDialogCreate,
+      destroyAll: vi.fn(),
+      success: vi.fn(),
+      warning: vi.fn(),
+      error: vi.fn(),
+      info: vi.fn()
+    }),
     useMessage: () => ({ success: vi.fn() }),
     NCard: {
       template: '<div class="mock-card"><slot /><slot name="header-extra" /></div>',
@@ -59,5 +76,12 @@ describe('VesselListItem', () => {
 
     expect(editIcon).toBeTruthy();
     expect(deleteIcon).toBeTruthy();
+  });
+
+  it('should render vessel longitude and latitude', () => {
+    const cardElement = document.querySelector('.vessel-card');
+
+    expect(cardElement?.textContent).toContain(vessel.latitude.toString());
+    expect(cardElement?.textContent).toContain(vessel.longitude.toString());
   });
 });
