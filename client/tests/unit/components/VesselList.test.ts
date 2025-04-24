@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { render } from '@testing-library/vue';
 import { renderWithSetup } from '../../helpers/render-helper';
 import { mockVessels } from '../../mocks/vessels';
 import { mockVesselMarkers } from '../../mocks/markers';
