@@ -1,10 +1,17 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { renderWithSetup } from '../../helpers/render-helper';
-import { mockVessels } from '../../mocks/vessels';
-import { mockVesselMarkers } from '../../mocks/markers';
-import { mockDialogCreate, naiveUIMocks, resetNaiveUIMocks } from '../../mocks/components/naive-ui-mocks';
-import { mockVesselFormModal, resetVesselFormModalMocks } from '../../mocks/components/vessel-form-modal-mock';
-import VesselListItem from '../../../src/components/sidebar/VesselListItem.vue';
+import { renderWithSetup } from '../../../helpers/render-helper';
+import { mockVessels } from '../../../mocks/vessels';
+import { mockVesselMarkers } from '../../../mocks/markers';
+import {
+  mockDialogCreate,
+  naiveUIMocks,
+  resetNaiveUIMocks,
+} from '../../../mocks/components/naive-ui-mocks';
+import {
+  mockVesselFormModal,
+  resetVesselFormModalMocks,
+} from '../../../mocks/components/vessel-form-modal-mock';
+import VesselListItem from '../../../../src/components/sidebar/VesselListItem.vue';
 
 const vessel = mockVessels[0];
 
@@ -18,7 +25,7 @@ describe('VesselListItem component', () => {
       stores: {
         vessel: { vessels: mockVessels },
         marker: { markers: mockVesselMarkers },
-      }
+      },
     });
   });
 

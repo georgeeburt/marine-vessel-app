@@ -8,14 +8,14 @@ export const mockDialog = {
   success: vi.fn(),
   warning: vi.fn(),
   error: vi.fn(),
-  info: vi.fn()
+  info: vi.fn(),
 };
 
 export const mockMessage = {
   success: vi.fn(),
   error: vi.fn(),
   warning: vi.fn(),
-  info: vi.fn()
+  info: vi.fn(),
 };
 
 export const naiveUIMocks = {
@@ -28,38 +28,41 @@ export const naiveUIMocks = {
   NTooltip: { template: '<div><slot /><slot name="trigger" /></div>' },
   NModal: {
     template: '<div class="mock-modal" :data-show="show"><slot /></div>',
-    props: ['show']
+    props: ['show'],
   },
   NForm: {
     template: '<form class="mock-form"><slot /></form>',
-    props: ['model', 'rules']
+    props: ['model', 'rules'],
   },
   NFormItem: {
-    template: '<div class="mock-form-item"><label v-if="label">{{ label }}</label><slot /></div>',
-    props: ['label', 'path']
+    template:
+      '<div class="mock-form-item"><label v-if="label">{{ label }}</label><slot /></div>',
+    props: ['label', 'path'],
   },
   NInput: {
-    template: '<input class="mock-input" :value="value" @input="$emit(\'update:value\', $event.target.value)" />',
+    template:
+      '<input class="mock-input" :value="value" @input="$emit(\'update:value\', $event.target.value)" />',
     props: ['value'],
-    emits: ['update:value']
+    emits: ['update:value'],
   },
   NInputNumber: {
-    template: '<input type="number" class="mock-input-number" :value="value" @input="$emit(\'update:value\', Number($event.target.value))" />',
+    template:
+      '<input type="number" class="mock-input-number" :value="value" @input="$emit(\'update:value\', Number($event.target.value))" />',
     props: ['value', 'min', 'max'],
-    emits: ['update:value']
+    emits: ['update:value'],
   },
   NButton: {
     template: '<button class="mock-button" @click="$emit(\'click\')"><slot /></button>',
     props: ['type'],
-    emits: ['click']
-  }
+    emits: ['click'],
+  },
 };
 
 export function resetNaiveUIMocks() {
-  Object.values(mockDialog).forEach(mock =>
-    vi.isMockFunction(mock) && mock.mockReset()
+  Object.values(mockDialog).forEach(
+    (mock) => vi.isMockFunction(mock) && mock.mockReset()
   );
-  Object.values(mockMessage).forEach(mock =>
-    vi.isMockFunction(mock) && mock.mockReset()
+  Object.values(mockMessage).forEach(
+    (mock) => vi.isMockFunction(mock) && mock.mockReset()
   );
-};
+}

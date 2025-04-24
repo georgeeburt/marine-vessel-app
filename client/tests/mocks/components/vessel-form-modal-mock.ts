@@ -21,8 +21,8 @@ export const vesselFormModalMock = {
     },
     updated() {
       this.$el.setAttribute('data-shown', this.show ? 'true' : 'false');
-    }
-  }
+    },
+  },
 };
 
 export function resetVesselFormModalMocks() {
