@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { renderWithSetup } from '../../../helpers/render-helper';
-import { mockVessels } from '../../../mocks/vessels';
-import { mockVesselMarkers } from '../../../mocks/markers';
+import { mockVessels } from '../../../mocks/data/vessels';
+import { mockVesselMarkers } from '../../../mocks/data/markers';
 import {
   mockDialogCreate,
   naiveUIMocks,

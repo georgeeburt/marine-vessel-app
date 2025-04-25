@@ -36,7 +36,9 @@
       </n-form-item>
       <div class="action-buttons">
         <n-form-item>
-          <n-button @click="$emit('update:show', false)">Cancel</n-button>
+          <n-button @click="$emit('update:show', false)" class="cancel-button"
+            >Cancel</n-button
+          >
         </n-form-item>
         <n-form-item>
           <n-button type="primary" @click="handleValidateClick" style="width: 100%">
@@ -98,13 +100,19 @@ watch(
 );
 //@ts-expect-error: Parameter required by Naive UI but not used in function
 const validateVesselName = (rule: FormItemRule, newName: string): boolean => {
-  if (isEditing.value && props.vessel && props.vessel.name.toLowerCase() === newName) {
+  if (
+    isEditing.value &&
+    props.vessel &&
+    props.vessel.name.toLowerCase() === newName.toLowerCase()
+  ) {
     return true;
   }
 
+  const lowercaseNewName = newName.toLowerCase();
   const exists = vesselStore.vessels.some(
-    (vessel) => vessel.name.toLowerCase() === newName
+    (vessel) => vessel.name.toLowerCase() === lowercaseNewName
   );
+
   if (exists) {
     return false;
   }
@@ -145,6 +153,7 @@ const rules = {
 const handleValidateClick = () => {
   if (formRef.value) {
     formValue.value.name = formValue.value.name.toLowerCase();
+
     formRef.value
       .validate()
       .then(() => {

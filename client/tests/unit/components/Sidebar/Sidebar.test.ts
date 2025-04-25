@@ -1,9 +1,12 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { fireEvent } from '@testing-library/vue';
 import { renderWithSetup } from '../../../helpers/render-helper';
-import { mockVesselMarkers } from '../../../mocks/markers';
-import { mockVessels } from '../../../mocks/vessels';
-import { naiveUIMocks, resetNaiveUIMocks } from '../../../mocks/components/naive-ui-mocks';
+import { mockVesselMarkers } from '../../../mocks/data/markers';
+import { mockVessels } from '../../../mocks/data/vessels';
+import {
+  naiveUIMocks,
+  resetNaiveUIMocks,
+} from '../../../mocks/components/naive-ui-mocks';
 import {
   mockVesselFormModal,
   resetVesselFormModalMocks,

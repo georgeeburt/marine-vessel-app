@@ -31,8 +31,25 @@ export const naiveUIMocks = {
     props: ['show'],
   },
   NForm: {
-    template: '<form class="mock-form"><slot /></form>',
+    template: '<form class="mock-form" @submit.prevent><slot /></form>',
     props: ['model', 'rules'],
+    methods: {
+      validate() {
+        if (this.model && this.rules && this.model.name && this.rules.name) {
+          const nameRules = this.rules.name;
+
+          for (const rule of nameRules) {
+            if (rule.validator) {
+              const isValid = rule.validator(rule, this.model.name);
+              if (!isValid) {
+                return Promise.reject(new Error('Validation failed'));
+              }
+            }
+          }
+        }
+        return Promise.resolve();
+      },
+    },
   },
   NFormItem: {
     template:

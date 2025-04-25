@@ -1,6 +1,6 @@
 import { setActivePinia, createPinia } from 'pinia';
 import { it, describe, beforeEach, expect } from 'vitest';
-import { mockVessel, mockVessels } from '../../mocks/vessels';
+import { mockVessel, mockVessels } from '../../mocks/data/vessels';
 import { useVesselStore } from '../../../src/stores/vessel-store';
 
 describe('Vessel Store', () => {

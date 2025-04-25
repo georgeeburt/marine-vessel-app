@@ -1,8 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { renderWithSetup } from '../../../helpers/render-helper';
-import { mockVessels } from '../../../mocks/vessels';
-import { mockVesselMarkers } from '../../../mocks/markers';
-import { naiveUIMocks, resetNaiveUIMocks } from '../../../mocks/components/naive-ui-mocks';
+import { mockVessels } from '../../../mocks/data/vessels';
+import { mockVesselMarkers } from '../../../mocks/data/markers';
+import {
+  naiveUIMocks,
+  resetNaiveUIMocks,
+} from '../../../mocks/components/naive-ui-mocks';
 import VesselList from '../../../../src/components/sidebar/VesselList.vue';
 
 vi.mock('naive-ui', () => naiveUIMocks);
