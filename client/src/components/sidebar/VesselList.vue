@@ -1,12 +1,19 @@
 <template>
   <div class="vessel-list">
     <h3 class="vessel-list-title">Tracked Vessels ({{ vesselStore.vessels.length }})</h3>
-    <VesselListItem v-for="vessel in filteredVessels" :key="vessel.id" :vessel="vessel" />
+    <n-skeleton v-if="loading" height="180px" :sharp="false" :repeat="4" />
+    <VesselListItem
+      v-for="vessel in filteredVessels"
+      :key="vessel.id"
+      :vessel="vessel"
+      v-else
+    />
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
+import { NSkeleton } from 'naive-ui';
 import { useVesselStore } from '@/stores/vessel-store';
 import VesselListItem from './VesselListItem.vue';
 
@@ -17,8 +24,26 @@ const props = defineProps({
   },
 });
 
+const loading = ref(true);
+
 const vesselStore = useVesselStore();
 const { vessels } = storeToRefs(vesselStore);
+
+onMounted(() => {
+  if (vessels.value.length > 0) {
+    loading.value = false;
+  } else {
+    setTimeout(() => {
+      loading.value = false;
+    }, 800);
+  }
+});
+
+watch(vessels, (newVessels) => {
+  if (newVessels.length > 0 && loading.value) {
+    loading.value = false;
+  }
+});
 
 const filteredVessels = computed(() => {
   if (!props.filterQuery) return vessels.value;

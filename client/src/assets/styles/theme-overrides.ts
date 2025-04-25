@@ -48,4 +48,8 @@ export const themeOverrides: GlobalThemeOverrides = {
     textColor: '#D8D8D8',
     color: '#141A3C',
   },
+  Skeleton: {
+    color: '#141A3C',
+    colorEnd: '#182049',
+  },
 };

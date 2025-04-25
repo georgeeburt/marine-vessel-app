@@ -58,19 +58,20 @@ import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '@/composables/use-socket';
 import { useMarkerStore } from '@/stores/marker-store';
 import { capitaliseLetters } from '@/utils/text-formatters';
-import VesselFormModal from '../ui/VesselFormModal.vue';
 import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
+import VesselFormModal from '../ui/VesselFormModal.vue';
 import type { Vessel } from '@shared/types/vessel';
 
 const props = defineProps<{
   vessel: Vessel;
 }>();
-const markerStore = useMarkerStore();
-const { emitDeleteVessel } = useSocket();
-const deleteDialog = useDialog();
+
 const showEditModal = ref(false);
 
+const { emitDeleteVessel } = useSocket();
 const message = useMessage();
+const markerStore = useMarkerStore();
+const deleteDialog = useDialog();
 
 const focusVessel = (vesselId: number) => {
   const marker = markerStore.markers.find((marker) => marker.id === vesselId);
