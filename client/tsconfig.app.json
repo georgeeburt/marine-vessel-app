@@ -16,5 +16,11 @@
     },
     "types": ["google.maps"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/types/**/*"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../shared/types/**/*",
+    "tests/mocks/composables/use-socket-mock.ts"
+  ]
 }

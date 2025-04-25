@@ -1,4 +1,4 @@
-import type { Vessel } from '../../../shared/types/vessel';
+import type { Vessel } from '../../../../shared/types/vessel';
 
 export const mockVessels: Vessel[] = [
   {

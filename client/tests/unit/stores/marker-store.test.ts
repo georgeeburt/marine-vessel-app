@@ -1,7 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia';
 import { it, describe, beforeEach, expect } from 'vitest';
 import { useMarkerStore } from '../../../src/stores/marker-store';
-import { mockVesselMarker, mockVesselMarkers } from '../../mocks/markers';
+import { mockVesselMarker, mockVesselMarkers } from '../../mocks/data/markers';
 
 describe('Marker Store', () => {
   beforeEach(() => setActivePinia(createPinia()));
