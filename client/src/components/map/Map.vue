@@ -34,11 +34,18 @@ const attachMarkerListeners = (
       currentOpenInfoWindow.value.close();
     }
 
+    vesselStore.toggleSelectedVessel(vessel.id);
+
     const updatedVessel = vessels.value.find((v) => v.id === vessel.id) || vessel;
     infoWindow.setContent(getInfoWindowContent(updatedVessel));
 
     infoWindow.open(map, marker);
     currentOpenInfoWindow.value = infoWindow;
+  });
+
+  infoWindow.addListener('closeclick', () => {
+    currentOpenInfoWindow.value = null;
+    vesselStore.selectedVesselId = null;
   });
 };
 
@@ -102,6 +109,8 @@ onMounted(async () => {
         currentOpenInfoWindow.value.close();
         currentOpenInfoWindow.value = null;
       }
+
+      vesselStore.selectedVesselId = null;
     });
 
     watch(
@@ -129,6 +138,25 @@ onMounted(async () => {
         });
       },
       { deep: true }
+    );
+
+    watch(
+      () => vesselStore.selectedVesselId,
+      (newSelectedId) => {
+        markerStore.markers.forEach((markerData) => {
+          if (!markerData.marker.content) return;
+
+          const pinElement = markerData.marker.content as HTMLElement;
+
+          if (markerData.id === newSelectedId) {
+            pinElement.style.transform = 'scale(1.2)';
+            pinElement.style.zIndex = '1000';
+          } else {
+            pinElement.style.transform = 'scale(1.0)';
+            pinElement.style.zIndex = '';
+          }
+        });
+      }
     );
 
     vessels.value.forEach((vessel: Vessel) => {

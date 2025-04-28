@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { storeToRefs } from 'pinia';
 import { NSkeleton } from 'naive-ui';
 import { useVesselStore } from '@/stores/vessel-store';
@@ -47,6 +47,48 @@ watch(vessels, (newVessels) => {
     loading.value = false;
   }
 });
+
+watch(
+  () => vesselStore.selectedVesselId,
+  async (newSelectedId) => {
+    if (!newSelectedId) return;
+
+    await nextTick();
+
+    const scrollIfNeeded = () => {
+      const element = document.getElementById(`vessel-${newSelectedId}`);
+      const container = document.querySelector('.vessel-list');
+
+      if (!element || !container) return;
+
+      const elementRect = element.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      // Only scroll if selected vessel card is not fully visible
+      if (
+        elementRect.top < containerRect.top ||
+        elementRect.bottom > containerRect.bottom
+      ) {
+        const containerEl = container as HTMLElement;
+        const elementEl = element as HTMLElement;
+
+        const scrollPosition =
+          elementEl.offsetTop -
+          containerEl.offsetTop -
+          containerRect.height / 2 +
+          elementRect.height / 2;
+
+        containerEl.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth',
+        });
+      }
+    };
+
+    scrollIfNeeded();
+    setTimeout(scrollIfNeeded, 50);
+  }
+);
 
 const filteredVessels = computed(() => {
   if (!props.filterQuery) return vessels.value;

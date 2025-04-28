@@ -1,7 +1,9 @@
 <template>
   <n-card
-    @click="focusVessel(vessel.id)"
+    :id="`vessel-${vessel.id}`"
+    @click="toggleFocusVessel(vessel.id)"
     class="vessel-card"
+    :class="{ 'vessel-card-selected': isSelected }"
     :title="capitaliseLetters(vessel.name)"
     :bordered="true"
     :segmented="{ content: true }"
@@ -51,11 +53,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { map } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
 import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '@/composables/use-socket';
+import { useVesselStore } from '@/stores/vessel-store';
 import { useMarkerStore } from '@/stores/marker-store';
 import { capitaliseLetters } from '@/utils/text-formatters';
 import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
@@ -70,14 +73,21 @@ const showEditModal = ref(false);
 
 const { emitDeleteVessel } = useSocket();
 const message = useMessage();
+const vesselStore = useVesselStore();
 const markerStore = useMarkerStore();
 const deleteDialog = useDialog();
 
-const focusVessel = (vesselId: number) => {
-  const marker = markerStore.markers.find((marker) => marker.id === vesselId);
-  if (marker && map.value) {
-    map.value.panTo({ lat: marker.latitude, lng: marker.longitude });
-    map.value.setZoom(6);
+const isSelected = computed(() => vesselStore.selectedVesselId === props.vessel.id);
+
+const toggleFocusVessel = (vesselId: number) => {
+  vesselStore.toggleSelectedVessel(vesselId);
+
+  if (vesselStore.selectedVesselId === vesselId) {
+    const marker = markerStore.markers.find((marker) => marker.id === vesselId);
+    if (marker && map.value) {
+      map.value.panTo({ lat: marker.latitude, lng: marker.longitude });
+      map.value.setZoom(6);
+    }
   }
 };
 
@@ -122,6 +132,12 @@ const handleDeleteConfirm = () => {
 .vessel-card:hover {
   background-color: #3347af;
   cursor: pointer;
+}
+
+.vessel-card-selected {
+  background-color: #3347af;
+  border-left: 3px solid #4d6bfe;
+  box-shadow: 0 0 8px rgba(77, 107, 254, 0.5);
 }
 
 .vessel-card:hover .card-action-icons {
