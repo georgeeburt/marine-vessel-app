@@ -2,6 +2,9 @@
   <div class="vessel-list">
     <h3 class="vessel-list-title">Tracked Vessels ({{ vesselStore.vessels.length }})</h3>
     <n-skeleton v-if="loading" height="180px" :sharp="false" :repeat="4" />
+    <div class="empty-message" v-if="vessels.length === 0 && !loading">
+      <p>No current tracked vessels.</p>
+    </div>
     <VesselListItem
       v-for="vessel in filteredVessels"
       :key="vessel.id"
@@ -69,6 +72,11 @@ const filteredVessels = computed(() => {
   font-size: 1.5rem;
   color: #d8d8d9;
   font-weight: 400;
+}
+
+.empty-message {
+  color: #c2c2c2;
+  font-size: 1.1rem;
 }
 
 .vessel-list::-webkit-scrollbar {

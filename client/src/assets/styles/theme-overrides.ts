@@ -7,6 +7,7 @@ export const themeOverrides: GlobalThemeOverrides = {
     textColorBase: '#D8D8D9',
     textColor1: '#D8D8D9',
     textColor2: '#D8D8D9',
+    textColor3: '#D8D8D9',
     borderRadius: '5px',
     borderColor: '#4D6BFE',
     hoverColor: '#4D6BFE',
