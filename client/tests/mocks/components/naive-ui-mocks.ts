@@ -73,6 +73,19 @@ export const naiveUIMocks = {
     props: ['type'],
     emits: ['click'],
   },
+  NSkeleton: {
+    template: '<div class="mock-skeleton" :style="{height: height}"><slot /></div>',
+    props: {
+      text: Boolean,
+      round: Boolean,
+      circle: Boolean,
+      height: [String, Number],
+      width: [String, Number],
+      repeat: Number,
+      sharp: Boolean,
+      size: String,
+    },
+  },
 };
 
 export function resetNaiveUIMocks() {

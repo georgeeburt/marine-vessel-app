@@ -4,9 +4,9 @@ import { Component } from 'vue';
 import { vi } from 'vitest';
 
 interface SetupOptions {
-  props?: Record<string, any>;
-  stores?: Record<string, any>;
-  stubs?: Record<string, any>;
+  props?: Record<string, unknown>;
+  stores?: Record<string, Record<string, unknown>>;
+  stubs?: Record<string, boolean | string | object>;
   global?: Partial<RenderOptions<Component>['global']>;
 }
 
