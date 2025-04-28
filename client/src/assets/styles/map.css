@@ -5,6 +5,10 @@
   border-radius: 8px !important;
 }
 
+.gm-style .gm-style-iw-tc {
+  filter: drop-shadow(0 0 0 transparent) !important;
+}
+
 .gm-style .gm-style-iw-d {
   background-color: #293783;
   color: #dbdbdb;

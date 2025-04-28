@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { map } from '../map/map-instance';
+import { map, openInfoWindowForVessel } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
 import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '@/composables/use-socket';
@@ -87,6 +87,8 @@ const toggleFocusVessel = (vesselId: number) => {
     if (marker && map.value) {
       map.value.panTo({ lat: marker.latitude, lng: marker.longitude });
       map.value.setZoom(6);
+
+      openInfoWindowForVessel(props.vessel);
     }
   }
 };

@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { Loader } from '@googlemaps/js-api-loader';
-import { setMap } from './map-instance';
+import { setMap, currentOpenInfoWindow } from './map-instance';
 import { useSocket } from '@/composables/use-socket';
 import { useVesselStore } from '@/stores/vessel-store';
 import { useMarkerStore } from '@/stores/marker-store';
@@ -21,7 +21,6 @@ const markerStore = useMarkerStore();
 const { vessels } = storeToRefs(vesselStore);
 
 let map: google.maps.Map | null = null;
-let currentOpenInfoWindow = ref<google.maps.InfoWindow | null>(null);
 
 const attachMarkerListeners = (
   marker: google.maps.marker.AdvancedMarkerElement,
