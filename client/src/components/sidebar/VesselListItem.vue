@@ -36,10 +36,13 @@
         </n-tooltip>
       </div>
     </template>
-    <div class="card-content">
-      <p>
+    <div>
+      <p class="vessel-card-details">
+        <n-icon :component="WorldLatitude" color="#dbdbdb" />
         Latitude: {{ vessel.latitude }}
-        <br />
+      </p>
+      <p class="vessel-card-details">
+        <n-icon :component="WorldLongitude" color="#dbdbdb" />
         Longitude: {{ vessel.longitude }}
       </p>
     </div>
@@ -56,18 +59,17 @@
 import { ref, computed } from 'vue';
 import { map, openInfoWindowForVessel } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
-import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '@/composables/use-socket';
 import { useVesselStore } from '@/stores/vessel-store';
 import { useMarkerStore } from '@/stores/marker-store';
 import { capitaliseLetters } from '@/utils/text-formatters';
+import { TrashSharp } from '@vicons/ionicons5';
+import { WorldLongitude, WorldLatitude } from '@vicons/tabler';
 import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
 import VesselFormModal from '../ui/VesselFormModal.vue';
 import type { Vessel } from '@shared/types/vessel';
 
-const props = defineProps<{
-  vessel: Vessel;
-}>();
+const props = defineProps<{ vessel: Vessel }>();
 
 const showEditModal = ref(false);
 
@@ -134,6 +136,13 @@ const handleDeleteConfirm = () => {
 .vessel-card:hover {
   background-color: #3347af;
   cursor: pointer;
+}
+
+.vessel-card-details {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
 }
 
 .vessel-card-selected {
