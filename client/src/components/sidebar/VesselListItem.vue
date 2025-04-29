@@ -1,7 +1,9 @@
 <template>
   <n-card
-    @click="focusVessel(vessel.id)"
+    :id="`vessel-${vessel.id}`"
+    @click="toggleFocusVessel(vessel.id)"
     class="vessel-card"
+    :class="{ 'vessel-card-selected': isSelected }"
     :title="capitaliseLetters(vessel.name)"
     :bordered="true"
     :segmented="{ content: true }"
@@ -34,10 +36,13 @@
         </n-tooltip>
       </div>
     </template>
-    <div class="card-content">
-      <p>
+    <div>
+      <p class="vessel-card-details">
+        <n-icon :component="WorldLatitude" color="#dbdbdb" />
         Latitude: {{ vessel.latitude }}
-        <br />
+      </p>
+      <p class="vessel-card-details">
+        <n-icon :component="WorldLongitude" color="#dbdbdb" />
         Longitude: {{ vessel.longitude }}
       </p>
     </div>
@@ -51,32 +56,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { map } from '../map/map-instance';
+import { ref, computed } from 'vue';
+import { map, openInfoWindowForVessel } from '../map/map-instance';
 import { Edit } from '@vicons/tabler';
-import { TrashSharp } from '@vicons/ionicons5';
 import { useSocket } from '@/composables/use-socket';
+import { useVesselStore } from '@/stores/vessel-store';
 import { useMarkerStore } from '@/stores/marker-store';
 import { capitaliseLetters } from '@/utils/text-formatters';
-import VesselFormModal from '../ui/VesselFormModal.vue';
+import { TrashSharp } from '@vicons/ionicons5';
+import { WorldLongitude, WorldLatitude } from '@vicons/tabler';
 import { useDialog, useMessage, NCard, NIcon, NTooltip } from 'naive-ui';
+import VesselFormModal from '../ui/VesselFormModal.vue';
 import type { Vessel } from '@shared/types/vessel';
 
-const props = defineProps<{
-  vessel: Vessel;
-}>();
-const markerStore = useMarkerStore();
-const { emitDeleteVessel } = useSocket();
-const deleteDialog = useDialog();
+const props = defineProps<{ vessel: Vessel }>();
+
 const showEditModal = ref(false);
 
+const { emitDeleteVessel } = useSocket();
 const message = useMessage();
+const vesselStore = useVesselStore();
+const markerStore = useMarkerStore();
+const deleteDialog = useDialog();
 
-const focusVessel = (vesselId: number) => {
-  const marker = markerStore.markers.find((marker) => marker.id === vesselId);
-  if (marker && map.value) {
-    map.value.panTo({ lat: marker.latitude, lng: marker.longitude });
-    map.value.setZoom(6);
+const isSelected = computed(() => vesselStore.selectedVesselId === props.vessel.id);
+
+const toggleFocusVessel = (vesselId: number) => {
+  vesselStore.toggleSelectedVessel(vesselId);
+
+  if (vesselStore.selectedVesselId === vesselId) {
+    const marker = markerStore.markers.find((marker) => marker.id === vesselId);
+    if (marker && map.value) {
+      map.value.panTo({ lat: marker.latitude, lng: marker.longitude });
+      map.value.setZoom(6);
+
+      openInfoWindowForVessel(props.vessel);
+    }
   }
 };
 
@@ -121,6 +136,19 @@ const handleDeleteConfirm = () => {
 .vessel-card:hover {
   background-color: #3347af;
   cursor: pointer;
+}
+
+.vessel-card-details {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+}
+
+.vessel-card-selected {
+  background-color: #3347af;
+  border-left: 3px solid #4d6bfe;
+  box-shadow: 0 0 8px rgba(77, 107, 254, 0.5);
 }
 
 .vessel-card:hover .card-action-icons {

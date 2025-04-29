@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { Loader } from '@googlemaps/js-api-loader';
-import { setMap } from './map-instance';
+import { setMap, currentOpenInfoWindow } from './map-instance';
 import { useSocket } from '@/composables/use-socket';
 import { useVesselStore } from '@/stores/vessel-store';
 import { useMarkerStore } from '@/stores/marker-store';
@@ -21,7 +21,6 @@ const markerStore = useMarkerStore();
 const { vessels } = storeToRefs(vesselStore);
 
 let map: google.maps.Map | null = null;
-let currentOpenInfoWindow = ref<google.maps.InfoWindow | null>(null);
 
 const attachMarkerListeners = (
   marker: google.maps.marker.AdvancedMarkerElement,
@@ -34,11 +33,18 @@ const attachMarkerListeners = (
       currentOpenInfoWindow.value.close();
     }
 
+    vesselStore.toggleSelectedVessel(vessel.id);
+
     const updatedVessel = vessels.value.find((v) => v.id === vessel.id) || vessel;
     infoWindow.setContent(getInfoWindowContent(updatedVessel));
 
     infoWindow.open(map, marker);
     currentOpenInfoWindow.value = infoWindow;
+  });
+
+  infoWindow.addListener('closeclick', () => {
+    currentOpenInfoWindow.value = null;
+    vesselStore.selectedVesselId = null;
   });
 };
 
@@ -102,6 +108,8 @@ onMounted(async () => {
         currentOpenInfoWindow.value.close();
         currentOpenInfoWindow.value = null;
       }
+
+      vesselStore.selectedVesselId = null;
     });
 
     watch(
@@ -129,6 +137,25 @@ onMounted(async () => {
         });
       },
       { deep: true }
+    );
+
+    watch(
+      () => vesselStore.selectedVesselId,
+      (newSelectedId) => {
+        markerStore.markers.forEach((markerData) => {
+          if (!markerData.marker.content) return;
+
+          const pinElement = markerData.marker.content as HTMLElement;
+
+          if (markerData.id === newSelectedId) {
+            pinElement.style.transform = 'scale(1.2)';
+            pinElement.style.zIndex = '1000';
+          } else {
+            pinElement.style.transform = 'scale(1.0)';
+            pinElement.style.zIndex = '';
+          }
+        });
+      }
     );
 
     vessels.value.forEach((vessel: Vessel) => {

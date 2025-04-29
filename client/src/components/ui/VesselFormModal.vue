@@ -14,6 +14,7 @@
           v-model:value="formValue.name"
           placeholder="Enter vessel name"
           clearable
+          @blur="formValue.name = formValue.name.trim()"
         />
       </n-form-item>
       <n-form-item label="Latitude" path="latitude">
@@ -98,27 +99,6 @@ watch(
   },
   { immediate: true }
 );
-//@ts-expect-error: Parameter required by Naive UI but not used in function
-const validateVesselName = (rule: FormItemRule, newName: string): boolean => {
-  if (
-    isEditing.value &&
-    props.vessel &&
-    props.vessel.name.toLowerCase() === newName.toLowerCase()
-  ) {
-    return true;
-  }
-
-  const lowercaseNewName = newName.toLowerCase();
-  const exists = vesselStore.vessels.some(
-    (vessel) => vessel.name.toLowerCase() === lowercaseNewName
-  );
-
-  if (exists) {
-    return false;
-  }
-
-  return true;
-};
 
 const rules = {
   name: [
@@ -128,7 +108,34 @@ const rules = {
       message: 'Please enter a vessel name',
     },
     {
-      validator: validateVesselName,
+      //@ts-expect-error: Parameter required by Naive UI but not used in function
+      validator: (rule: FormItemRule, value: string): boolean => {
+        return value.trim().length > 0;
+      },
+      message: 'Vessel name cannot be empty',
+    },
+    {
+      //@ts-expect-error: Parameter required by Naive UI but not used in function
+      validator: (rule: FormItemRule, newName: string) => {
+        if (
+          isEditing.value &&
+          props.vessel &&
+          props.vessel.name.toLowerCase() === newName.toLowerCase()
+        ) {
+          return true;
+        }
+
+        const lowercaseNewName = newName.toLowerCase();
+        const exists = vesselStore.vessels.some(
+          (vessel) => vessel.name.toLowerCase() === lowercaseNewName
+        );
+
+        if (exists) {
+          return false;
+        }
+
+        return true;
+      },
       trigger: ['input', 'blur'],
       message: 'Vessel name already exists',
     },
@@ -152,7 +159,7 @@ const rules = {
 };
 const handleValidateClick = () => {
   if (formRef.value) {
-    formValue.value.name = formValue.value.name.toLowerCase();
+    formValue.value.name = formValue.value.name.trim().toLowerCase();
 
     formRef.value
       .validate()

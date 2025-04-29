@@ -10,7 +10,7 @@ import {
   mockEmitUpdateVessel,
 } from '../../mocks/composables/use-socket-mock';
 import VesselFormModal from '../../../src/components/ui/VesselFormModal.vue';
-import { mockVessels, mockVessel } from '../../mocks/data/vessels';
+import { mockVessel } from '../../mocks/data/vessels';
 
 vi.mock('naive-ui', () => naiveUIMocks);
 mockSocket();
